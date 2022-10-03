@@ -1,0 +1,23 @@
+ked je ipv6 uz neriesim nic viac?
+
+
+
+ako zistim sap pri LLC?
+vsetky z pdf
+pozret ssap
+
+ako zistim pid?
+ PID       | HEX    |
+|--------------------|
+| CDP       | 0x2000 |
+| DTP       | 0x2004 |
+| PVSTP+    | 0x010B |
+| AppleTalk | 0x809B |
+
+z ethertype pri snap
+
+ako ziskam ip z mac adress???
+toto je len pri E 2
+v datach 12:16 16:20 src a dst
+
+dlzka packetu sa meni pri ethernet type a tak?

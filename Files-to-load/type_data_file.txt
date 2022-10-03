@@ -1,0 +1,51 @@
+{
+    "ether_types": [
+        {
+            "0200": "XEROX PUP",
+            "0201": "PUP Addr Trans",
+            "0800": "IPv4",
+            "0801": "X.75 Internet",
+            "0805": "X.25 Level 3",
+            "0806": "ARP",
+            "8035": "Reverse ARP",
+            "809B": "Appletalk",
+            "80F3": "AppleTalk AARP",
+            "8100": "IEE 802.1Q VLAN-tagged frames",
+            "8137": "Novell IPX",
+            "86DD": "IPv6",
+            "880B": "PPP",
+            "8847": "MPLS",
+            "8848": "MPLS",
+            "8863": "PPPoE Discovery Stage",
+            "8864": "PPPoE Session Stage"
+        }
+    ],
+    "pid_types": [
+        {
+            "2000": "CDP",
+            "2004": "DTP",
+            "010B": "PVSTIP+",
+            "809B": "AppleTalk"
+        }
+    ],
+    "sap_types": [
+        {
+            "00": "Null SAP",
+            "02": "LLC Sublayer Management / Individual",
+            "03": "LLC Sublayer Management / Group",
+            "06": "IP (DoD Internet Protocol)",
+            "0E": "PROWAY",
+            "42": "BPDU",
+            "4E": "MMS",
+            "5E": "ISI IP",
+            "7E": "X.25 PLP",
+            "8E": "PROWAY",
+            "AA": "SNAP",
+            "ED": "IPX",
+            "F4": "LAN Management",
+            "FE": "ISO Network Layer Protocols",
+            "FF": "Global DSAP"
+        }
+    ]
+}
+

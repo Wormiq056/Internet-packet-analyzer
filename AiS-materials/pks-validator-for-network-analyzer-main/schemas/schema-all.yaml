@@ -5,7 +5,7 @@ ipv4_senders: list(include('sender'), min=1, required=False)
 max_send_packets_by: list(ip(), min=1, required=False)
 filter_name: str(require=False, ignore_case=True, required=False)
 complete_comms: list(include('communication'), min=1, required=False)
-partial_comms: list(include('communication'), min=1, required=False)
+partial_comms: list(include('partial_communication'), min=1, required=False)
 ---
 packet:
   frame_number: int(min=0)
@@ -24,9 +24,12 @@ packet:
     str(equals='LLDP', ignore_case=True), required=False)
   sap: >
     any(str(equals='STP', ignore_case=True),
+    str(equals='IPX', ignore_case=True), required=False)
+  pid: >
+    any(str(equals='AppleTalk', ignore_case=True),
     str(equals='CDP', ignore_case=True),
-    str(equals='IPX', ignore_case=True), 
-    str(equals='SAP', ignore_case=True), required=False)
+    str(equals='DTP', ignore_case=True),
+    str(equals='PVSTP+', ignore_case=True), required=False)
   arp_opcode: >
     any(str(equals='REQUEST', ignore_case=True),
     str(equals='REPLY', ignore_case=True), required=False)

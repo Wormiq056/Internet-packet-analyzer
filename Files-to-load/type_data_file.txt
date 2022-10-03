@@ -46,6 +46,12 @@
             "FE": "ISO Network Layer Protocols",
             "FF": "Global DSAP"
         }
+    ],
+    "arp_types": [
+        {
+            "0001": "REQUEST",
+            "0002": "REPLY"
+        }
     ]
 }
 

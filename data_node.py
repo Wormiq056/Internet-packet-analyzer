@@ -1,19 +1,19 @@
-from dataclasses import dataclass, asdict
+
 from ruamel.yaml.scalarstring import LiteralScalarString
 
-
-# @dataclass(init=False)
 class Node:
     raw_hexa_frame: str
     frame_number: int
     len_frame_pcap: int
     len_frame_medium: int
     frame_type: str
-    src_mac: str  # placeholder
-    dst_mac: str  # placeholder
+    src_mac: str
+    dst_mac: str
 
-    other_attributes = {}  # placeholder
     hexa_frame = str
+
+    def __init__(self):
+        self.other_attributes ={}
 
     def _adjust_hexa_frame(self, hexa_frame: str) -> str:
         new_frame = ' '.join(hexa_frame[i:i + 2] for i in range(0, len(hexa_frame), 2))

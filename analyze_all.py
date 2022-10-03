@@ -4,7 +4,6 @@ import data_node
 import ethernet_analyzer
 import txt_file_loader
 
-INDENTATION = 10
 
 
 class AnalyzeAll:
@@ -15,6 +14,7 @@ class AnalyzeAll:
         self.packets = packets
         self.file_name = file_name
         self.file_loader = txt_file_loader.TxtFileLoader()
+        self.ethernet_analyzer = ethernet_analyzer.EthernetAnalyzer(self.file_loader)
         self._start()
 
     def _start(self) -> None:
@@ -28,13 +28,13 @@ class AnalyzeAll:
 
     def process_packet_by_frame(self, node: data_node.Node) -> None:
         if node.frame_type == "ETHERNET II":
-            ethernet_analyzer.EthernetAnalyzer.process_ethernet(node)
+            self.ethernet_analyzer.process_ethernet(node)
 
     def _output(self):
         with open("output-all.yaml", "w") as file:
             file_dict = []
-            for i in range(len(self.finished_nodes)):
-                node_dict = self.finished_nodes[i].return_dict()
+            for node in self.finished_nodes:
+                node_dict = node.return_dict()
                 file_dict.append(node_dict)
             yaml = ruamel.yaml.YAML()
             yaml.indent(sequence=4, offset=2)

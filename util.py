@@ -28,6 +28,8 @@ def find_general_data(packet: str, frame_number: int) -> data_node.Node:
 
     return node
 
+def convert_to_decimal(hex: str)-> int:
+    return int(hex, base=16)
 
 def find_frame_type(node: data_node.Node) -> None:
     if int(node.raw_hexa_frame[consts.ETHERNET_START:consts.ETHERNET_END], base=16) > 1536:
@@ -37,6 +39,6 @@ def find_frame_type(node: data_node.Node) -> None:
             node.frame_type = "IEEE 802.3 RAW"
 
         elif node.raw_hexa_frame[consts.IEEE_START:consts.IEEE_END].upper() == "AAAA":
-            node.frame_type = "IEEE 802.3 LCC & SNAP"
+            node.frame_type = "IEEE 802.3 LLC & SNAP"
         else:
-            node.frame_type = "IEEE 802.3 LCC"
+            node.frame_type = "IEEE 802.3 LLC"

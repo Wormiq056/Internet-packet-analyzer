@@ -28,6 +28,23 @@ class EthernetAnalyzer:
         node.other_attributes["dst_ip"] = util.get_ip_adress(
             node.raw_hexa_frame[consts.ARP_DST_START:consts.ARP_DST_END])
 
+    def process_tcp_udp(self, node: data_node.Node) -> None:
+        src_port = util.convert_to_decimal(node.raw_hexa_frame[consts.SRC_PORT_START:consts.SRC_PORT_END])
+        dst_port = util.convert_to_decimal(node.raw_hexa_frame[consts.DST_PORT_START:consts.DST_PORT_END])
+        node.other_attributes["src_port"] = src_port
+        node.other_attributes["dst_port"] = dst_port
+
+        if self.txt_loader.tcp_upd_ports.get(str(src_port)) is not None:
+            node.other_attributes["app_protocol"] = self.txt_loader.tcp_upd_ports.get(str(src_port))
+        if self.txt_loader.tcp_upd_ports.get(str(dst_port)) is not None:
+            node.other_attributes["app_protocol"] = self.txt_loader.tcp_upd_ports.get(str(dst_port))
+
     def process_ipv4(self, node: data_node.Node) -> None:
         node.other_attributes["src_ip"] = util.get_ip_adress(node.raw_hexa_frame[consts.IP_SRC_START:consts.IP_SRC_END])
         node.other_attributes["dst_ip"] = util.get_ip_adress(node.raw_hexa_frame[consts.IP_DST_START:consts.IP_DST_END])
+        ipv4_protocol = self.txt_loader.ipv4_protocols.get(
+            node.raw_hexa_frame[consts.IPV4_PROTOCOL_START:consts.IPV4_PROTOCOL_END])
+        node.other_attributes["protocol"] = ipv4_protocol
+
+        if ipv4_protocol == "TCP" or ipv4_protocol == "UDP":
+            self.process_tcp_udp(node)

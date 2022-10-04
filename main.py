@@ -2,7 +2,7 @@ from scapy.all import *
 from binascii import *
 import analyze_all as all
 
-FILE_PATH = ".\AiS-materials\packets\\trace-20.pcap"
+FILE_PATH = ".\AiS-materials\packets\\eth-3.pcap"
 FILE_NAME = "trace-20.pcap"
 
 

@@ -17,14 +17,15 @@
             "8847": "MPLS",
             "8848": "MPLS",
             "8863": "PPPoE Discovery Stage",
-            "8864": "PPPoE Session Stage"
+            "8864": "PPPoE Session Stage",
+            "88CC": "LLDP"
         }
     ],
     "pid_types": [
         {
             "2000": "CDP",
             "2004": "DTP",
-            "010B": "PVSTIP+",
+            "010B": "PVSTP+",
             "809B": "AppleTalk"
         }
     ],
@@ -35,7 +36,7 @@
             "03": "LLC Sublayer Management / Group",
             "06": "IP (DoD Internet Protocol)",
             "0E": "PROWAY",
-            "42": "BPDU",
+            "42": "STP",
             "4E": "MMS",
             "5E": "ISI IP",
             "7E": "X.25 PLP",
@@ -51,6 +52,56 @@
         {
             "0001": "REQUEST",
             "0002": "REPLY"
+        }
+    ],
+    "ipv4_protocols": [
+        {
+            "00": "HOPOPT",
+            "01": "ICMP",
+            "02": "IGMP",
+            "03": "GGP",
+            "05": "ST",
+            "06": "TCP",
+            "07": "CBT",
+            "08": "EGP",
+            "09": "IGP",
+            "1D": "ISO-TP4",
+            "23": "IDPR",
+            "24": "XTP",
+            "2D": "IDRP",
+            "38": "TLSP",
+            "43": "IPPC",
+            "60": "SCC-SP",
+            "76": "STP",
+            "11": "UDP"
+        }
+    ],
+    "tcp_udp_ports": [
+        {
+            "20": "FTP_DATA",
+            "21": "FTP-CONTROL",
+            "22": "SSH",
+            "23": "TELNET",
+            "25": "SMTP",
+            "37": "TIME",
+            "53": "DNS",
+            "80": "HTTP",
+            "119": "NNTP",
+            "443": "HTTPS",
+            "179": "BGP",
+            "110": "POP3",
+            "139": "NETBIOS_SSN",
+            "389": "LDAP",
+            "67": "DHCP",
+            "68": "DHCP",
+            "69": "TFTP",
+            "137": "NETBIOS-NS",
+            "138": "NETBIOS-DGM",
+            "161": "SNMP",
+            "162": "SNMP-TRAP",
+            "514": "SYSLOG",
+            "520": "RIP",
+            "33434": "TRACEROUTE"
         }
     ]
 }

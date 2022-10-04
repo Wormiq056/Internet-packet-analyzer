@@ -103,6 +103,23 @@
             "520": "RIP",
             "33434": "TRACEROUTE"
         }
+    ],
+    "icmp_types": [
+        {
+            "0": "ECHO REPLY",
+            "3": "DESTINATION UNREACHABLE",
+            "5": "REDIRECT",
+            "8": "ECHO",
+            "9": "ROUTER ADVERTISEMENT",
+            "10": "ROUTER SOLICITATION",
+            "11": "TIME EXCEEDED",
+            "12": "PARAMETER PROBLEM",
+            "13": "TIMESTAMP",
+            "14": "TIMESTAMP REPLY",
+            "40": "PHOTURIS",
+            "42": "EXTENDED ECHO REQUEST",
+            "43": "EXTENDED ECHO REPLY"
+        }
     ]
 }
 

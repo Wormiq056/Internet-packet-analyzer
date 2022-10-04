@@ -21,7 +21,8 @@ class AnalyzeAll:
 
     def _start(self) -> None:
         for packet in self.packets:
-            node = util.find_general_data(packet, self.frame_number)
+            node = data_node.Node()
+            util.find_general_data(node,packet, self.frame_number)
             util.find_frame_type(node)
             self.process_packet_by_frame(node)
             self.finished_nodes.append(node)

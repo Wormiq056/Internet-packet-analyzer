@@ -13,8 +13,7 @@ def adjust_mac_adress(adress: str) -> str:
     return result.upper()
 
 
-def find_general_data(packet: str, frame_number: int) -> data_node.Node:
-    node = data_node.Node()
+def find_general_data(node: data_node.Node, packet: str, frame_number: int) -> None:
     node.frame_number = frame_number
     node.src_mac = adjust_mac_adress(packet[consts.SRC_START:consts.SRC_END])
     node.dst_mac = adjust_mac_adress(packet[:consts.DST_END])
@@ -26,10 +25,10 @@ def find_general_data(packet: str, frame_number: int) -> data_node.Node:
         node.len_frame_pcap = int(len(packet) / 2)
         node.len_frame_medium = int(node.len_frame_pcap + 4)
 
-    return node
 
-def convert_to_decimal(hex: str)-> int:
+def convert_to_decimal(hex: str) -> int:
     return int(hex, base=16)
+
 
 def find_frame_type(node: data_node.Node) -> None:
     if int(node.raw_hexa_frame[consts.ETHERNET_START:consts.ETHERNET_END], base=16) > 1536:
@@ -42,3 +41,36 @@ def find_frame_type(node: data_node.Node) -> None:
             node.frame_type = "IEEE 802.3 LLC & SNAP"
         else:
             node.frame_type = "IEEE 802.3 LLC"
+
+
+def compare_ip_nodes(node1: data_node.Node, node2: data_node.Node) -> bool:
+    src1 = node1.other_attributes.get("src_ip")
+    dst1 = node1.other_attributes.get("dst_ip")
+    src2 = node2.other_attributes.get("src_ip")
+    dst2 = node2.other_attributes.get("dst_ip")
+    if (src1 == src2 and dst1 == dst2) or (src1 == dst2 and dst1 == src2):
+        return True
+    else:
+        return False
+
+
+def check_next_comm(node1: data_node.Node, node2: data_node.Node) -> bool:
+    src1 = node1.other_attributes.get("src_ip")
+    dst1 = node1.other_attributes.get("dst_ip")
+    src2 = node2.other_attributes.get("src_ip")
+    dst2 = node2.other_attributes.get("dst_ip")
+    if src1 == dst2 and dst1 == src2:
+        return True
+    else:
+        return False
+
+
+def check_if_partial_comm(node1: data_node.Node, node2: data_node.Node) -> bool:
+    src1 = node1.other_attributes.get("src_ip")
+    dst1 = node1.other_attributes.get("dst_ip")
+    src2 = node2.other_attributes.get("src_ip")
+    dst2 = node2.other_attributes.get("dst_ip")
+    if src1 == src2 and dst1 == dst2:
+        return True
+    else:
+        return False

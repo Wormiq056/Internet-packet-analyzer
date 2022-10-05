@@ -14,8 +14,9 @@ packet:
   src_mac: mac()
   dst_mac: mac()
   sap: >
-    any(str(equals='STP', ignore_case=True),
-    str(equals='IPX', ignore_case=True), required=False)
+    any(str(equals='IPX', ignore_case=True),
+    str(equals='NETBIOS', ignore_case=True),
+    str(equals='STP', ignore_case=True), required=False)
   pid: >
     any(str(equals='AppleTalk', ignore_case=True),
     str(equals='CDP', ignore_case=True),

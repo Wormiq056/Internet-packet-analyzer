@@ -60,7 +60,7 @@ class AnalyzeAll:
             packets_dict = CS(file_list)
             for i in range(len(packets_dict)):
                 packets_dict.yaml_set_comment_before_after_key(i + 1, before='\n')
-            output_dict = {'name': "Matus Rusnak ID: 116286", 'pcap_name': self.file_name, "packets": packets_dict}
+            output_dict = {'name': "Matus Rusnak ID 116286", 'pcap_name': self.file_name, "packets": packets_dict}
             yaml.dump(output_dict, file)
             file.write('\n')
 

@@ -18,7 +18,8 @@
             "8848": "MPLS",
             "8863": "PPPoE Discovery Stage",
             "8864": "PPPoE Session Stage",
-            "88CC": "LLDP"
+            "88CC": "LLDP",
+            "9000": "ECTP"
         }
     ],
     "pid_types": [
@@ -45,7 +46,8 @@
             "ED": "IPX",
             "F4": "LAN Management",
             "FE": "ISO Network Layer Protocols",
-            "FF": "Global DSAP"
+            "FF": "Global DSAP",
+            "F0": "NETBIOS"
         }
     ],
     "arp_types": [
@@ -101,7 +103,8 @@
             "162": "SNMP-TRAP",
             "514": "SYSLOG",
             "520": "RIP",
-            "33434": "TRACEROUTE"
+            "33434": "TRACEROUTE",
+            "220": "IMAP"
         }
     ],
     "icmp_types": [

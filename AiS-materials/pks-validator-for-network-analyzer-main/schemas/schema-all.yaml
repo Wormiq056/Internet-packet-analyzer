@@ -21,10 +21,12 @@ packet:
   ether_type: >
     any(regex('^IPv[4,6]{1}$', ignore_case=True),
     str(equals='ARP', ignore_case=True),
+    str(equals='ECTP', ignore_case=True),
     str(equals='LLDP', ignore_case=True), required=False)
   sap: >
-    any(str(equals='STP', ignore_case=True),
-    str(equals='IPX', ignore_case=True), required=False)
+    any(str(equals='IPX', ignore_case=True),
+    str(equals='NETBIOS', ignore_case=True),
+    str(equals='STP', ignore_case=True), required=False)
   pid: >
     any(str(equals='AppleTalk', ignore_case=True),
     str(equals='CDP', ignore_case=True),

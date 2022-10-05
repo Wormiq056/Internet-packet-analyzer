@@ -3,6 +3,7 @@ import util
 import data_node
 import ethernet_analyzer
 import consts
+import ruamel.yaml
 
 
 class AnalyzeIcmp():
@@ -40,8 +41,8 @@ class AnalyzeIcmp():
                     self.process_icmp_type(node)
                     self.analyzed_nodes.append(node)
 
-
         self.find_comms()
+        self.output()
 
     def find_comms(self):
         for i in range(len(self.analyzed_nodes)):
@@ -58,7 +59,8 @@ class AnalyzeIcmp():
                     communication.append(self.analyzed_nodes[j])
                     found_comm = True
                     current_node = self.analyzed_nodes[j]
-                elif util.check_if_partial_comm(current_node, self.analyzed_nodes[j]):
+                elif util.check_if_partial_comm(current_node,
+                                                self.analyzed_nodes[j]) and current_node not in self.partial_comms:
                     self.partial_comms.append(current_node)
                     current_node = self.analyzed_nodes[j]
             if found_comm:
@@ -69,7 +71,38 @@ class AnalyzeIcmp():
                 self.checked_ips[src_ip + dst_ip] = True
                 self.checked_ips[dst_ip + src_ip] = True
 
-        print('test')
-        models = {node.frame_number for node in self.partial_comms}
-        print(len(self.partial_comms))
-        print(len(models))
+    def output(self):
+        CS = ruamel.yaml.comments.CommentedSeq
+        yaml = ruamel.yaml.YAML()
+        yaml.indent(sequence=4, offset=2)
+        complete_comm_list = []
+
+        for comm in self.complete_comms:
+            src_comm = comm[0].other_attributes.get("src_ip")
+            dst_comm = comm[0].other_attributes.get("dst_ip")
+            comm_CS = CS(node.return_dict() for node in comm)
+            for i in range(len(comm_CS)):
+                comm_CS.yaml_set_comment_before_after_key(i + 1, before='\n')
+            dict_to_append = {"number_comm": self.number_complete_comm, "src_comm": src_comm, "dst_comm": dst_comm,
+                              "packet": comm_CS}
+            self.number_complete_comm += 1
+            complete_comm_list.append(dict_to_append)
+
+        output_dict = {'name': 'Matus Rusnak ID 116286', 'pcap_name': self.file_name, 'filter_name': 'ICMP',
+                       'complete_comms': complete_comm_list}
+
+        partial_list = []
+        for node in self.partial_comms:
+            partial_dict = {"number_comm": self.number_partial_comm, "packets": node.return_dict()}
+            partial_list.append(partial_dict)
+            self.number_partial_comm += 1
+
+        partial_list_cs = CS(partial_list)
+        for i in range(len(partial_list_cs)):
+            partial_list_cs.yaml_set_comment_before_after_key(i + 1, before='\n')
+        final_partial_dict = {"partial_comms": partial_list_cs}
+
+        with open("output_icmp.yaml", "w") as file:
+            yaml.dump(output_dict, file)
+            file.write('\n')
+            yaml.dump(final_partial_dict, file)

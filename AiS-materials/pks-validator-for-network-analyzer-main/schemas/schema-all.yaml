@@ -37,6 +37,9 @@ packet:
     str(equals='REPLY', ignore_case=True), required=False)
   src_ip: ip(required=False)
   dst_ip: ip(required=False)
+  id: int(min=0,required=False)
+  flags_mf: bool(allow_empty=False, required=False)
+  frag_offset: int(min=0,required=False)
   protocol: >
     any(str(equals='ICMP', ignore_case=True),
     str(equals='IGMP', ignore_case=True),

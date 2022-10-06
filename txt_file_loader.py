@@ -2,6 +2,10 @@ import json
 
 
 class TxtFileLoader():
+    """
+    class that loads all protocol and type information from a external file
+    these dictionaries are later used in program for packet analyzation
+    """
     ether_types: dict
     sap_types: dict
     pid_types: dict

@@ -6,6 +6,10 @@ import consts
 
 
 class AnalyzeTcp:
+    """
+     class that filter all packets other than ICMP protocol packets
+    and finds complete communications and partial communications
+    """
     analyzed_nodes = []
     frame_number = 1
     number_complete_comm = 1
@@ -22,7 +26,11 @@ class AnalyzeTcp:
         self.protocol = protocol
         self._start()
 
-    def _start(self):
+    def _start(self) -> None:
+        """
+        method that filters packets for TCP
+
+        """
         for packet in self.packets:
             node = data_node.Node()
             util.find_general_data(node, packet, self.frame_number)
@@ -33,4 +41,3 @@ class AnalyzeTcp:
                 if node.other_attributes.get("protocol") == "TCP" and node.other_attributes.get(
                         "app_protocol") == self.protocol:
                     self.analyzed_nodes.append(node)
-

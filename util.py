@@ -1,19 +1,41 @@
 import data_node
 import consts
 
+"""
+this file contains many helper functions that are general, meaning are used in multiple other files
+"""
+
 
 def get_ip_adress(adress: str) -> str:
+    """
+    return IP address from mac address
+    :param adress: address to be converted
+    :return: correct IP address
+    """
+
     bytes = ["".join(x) for x in zip(*[iter(adress)] * 2)]
     bytes = [int(x, 16) for x in bytes]
     return ".".join(str(x) for x in bytes)
 
 
 def adjust_mac_adress(adress: str) -> str:
+    """
+     helper function that adjusts mac address for correct yaml output
+    :param adress: address to be adjusted
+    :return: correct format of address
+    """
+
     result = ':'.join(adress[i:i + 2] for i in range(0, len(adress), 2))
     return result.upper()
 
 
 def find_general_data(node: data_node.Node, packet: str, frame_number: int) -> None:
+    """
+    this helper method gives given node general packet information
+    :param node: object to store data in
+    :param packet: current packet for node
+    :param frame_number: number of packet that is beeing analyzed
+    """
     node.frame_number = frame_number
     node.src_mac = adjust_mac_adress(packet[consts.SRC_START:consts.SRC_END])
     node.dst_mac = adjust_mac_adress(packet[:consts.DST_END])
@@ -27,10 +49,19 @@ def find_general_data(node: data_node.Node, packet: str, frame_number: int) -> N
 
 
 def convert_to_decimal(hex: str) -> int:
+    """
+    simple helper function which converts hexadecimal number to a decimal
+    :param hex: hexadecimal to be converted
+    :return: decimal value
+    """
     return int(hex, base=16)
 
 
 def find_frame_type(node: data_node.Node) -> None:
+    """
+    helper functions which finds correct frame time for given packet
+    :param node: node which contains packet information
+    """
     if int(node.raw_hexa_frame[consts.ETHERNET_START:consts.ETHERNET_END], base=16) > 1536:
         node.frame_type = 'ETHERNET II'
     else:
@@ -44,6 +75,12 @@ def find_frame_type(node: data_node.Node) -> None:
 
 
 def compare_ip_nodes(node1: data_node.Node, node2: data_node.Node) -> bool:
+    """
+    not yet needed
+    :param node1:
+    :param node2:
+    :return:
+    """
     src1 = node1.other_attributes.get("src_ip")
     dst1 = node1.other_attributes.get("dst_ip")
     src2 = node2.other_attributes.get("src_ip")

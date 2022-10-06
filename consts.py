@@ -1,3 +1,6 @@
+"""
+this file stores all needed constants
+"""
 ETHER_TYPE_START = 24
 ETHER_TYPE_END = 28
 IP_SRC_START = 52

@@ -7,6 +7,10 @@ import ruamel.yaml
 
 
 class AnalyzeIcmp():
+    """
+    class that filter all packets other than ICMP protocol packets
+    and finds complete communications and partial communications
+    """
     analyzed_nodes = []
     frame_number = 1
     number_complete_comm = 1
@@ -23,13 +27,20 @@ class AnalyzeIcmp():
 
         self._start()
 
-    def process_icmp_type(self, node):
+    def process_icmp_type(self, node: data_node.Node) -> None:
+        """
+        method that finds icmp type
+        """
         hexadecimal_icmp = node.raw_hexa_frame[consts.ICMP_TYPE_START:consts.ICMP_TYPE_END]
         decimal_icmp = util.convert_to_decimal(hexadecimal_icmp)
         icmp_type = self.txt_loader.icmp_types.get(str(decimal_icmp))
         node.other_attributes["icmp_type"] = icmp_type
 
-    def _start(self):
+    def _start(self) -> None:
+        """
+        this method filters packets for ICMP packets
+
+        """
         for packet in self.packets:
             node = data_node.Node()
             util.find_general_data(node, packet, self.frame_number)
@@ -44,7 +55,7 @@ class AnalyzeIcmp():
         self.find_comms()
         self.output()
 
-    def find_comms(self):
+    def find_comms(self) -> None:
         for i in range(len(self.analyzed_nodes)):
             found_comm = False
             communication = []
@@ -71,7 +82,10 @@ class AnalyzeIcmp():
                 self.checked_ips[src_ip + dst_ip] = True
                 self.checked_ips[dst_ip + src_ip] = True
 
-    def output(self):
+    def output(self) -> None:
+        """
+        method that outputs complete and partial communications into output_icmp.yaml
+        """
         CS = ruamel.yaml.comments.CommentedSeq
         yaml = ruamel.yaml.YAML()
         yaml.indent(sequence=4, offset=2)

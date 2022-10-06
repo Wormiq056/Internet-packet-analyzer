@@ -4,9 +4,12 @@ import data_node
 import ethernet_analyzer
 import txt_file_loader
 import IEEE_analyzer
-from ruamel.yaml.scalarstring import LiteralScalarString
+
 
 class AnalyzeAll:
+    """
+    class that handles analyzation of all packets and writing them to output-all.yaml
+    """
     frame_number = 1
     finished_nodes = []
     unique_ipv4_ips = {}
@@ -20,9 +23,12 @@ class AnalyzeAll:
         self._start()
 
     def _start(self) -> None:
+        """
+        this method finds general inforomation of packets and its frame time
+        """
         for packet in self.packets:
             node = data_node.Node()
-            util.find_general_data(node,packet, self.frame_number)
+            util.find_general_data(node, packet, self.frame_number)
             util.find_frame_type(node)
             self.process_packet_by_frame(node)
             self.finished_nodes.append(node)
@@ -31,6 +37,9 @@ class AnalyzeAll:
         self._output()
 
     def _analyze(self):
+        """
+        this method analyzes all IPv4 packets for statistics
+        """
         for node in self.finished_nodes:
             if node.other_attributes.get("ether_type") == "IPv4":
                 if self.unique_ipv4_ips.get(node.other_attributes.get("src_ip")) is None:
@@ -39,6 +48,9 @@ class AnalyzeAll:
                     self.unique_ipv4_ips[node.other_attributes.get("src_ip")] += 1
 
     def process_packet_by_frame(self, node: data_node.Node) -> None:
+        """
+        this method chooses which analyzer should be called based on frame type
+        """
         if node.frame_type == "ETHERNET II":
             self.ethernet_analyzer.process_ethernet(node)
         elif node.frame_type == "IEEE 802.3 LLC & SNAP":
@@ -47,11 +59,13 @@ class AnalyzeAll:
             self.ieee_analyzer.process_LLC(node)
 
     def _output(self) -> None:
+        """
+        this method writes packet information and ip statistics to yaml file
+        """
         with open("output-all.yaml", "w") as file:
             CS = ruamel.yaml.comments.CommentedSeq
             yaml = ruamel.yaml.YAML()
             yaml.indent(sequence=4, offset=2)
-            # yaml.compact(seq_seq=False, seq_map=False)
 
             file_list = []
             for node in self.finished_nodes:
@@ -61,8 +75,6 @@ class AnalyzeAll:
             for i in range(len(packets_dict)):
                 packets_dict.yaml_set_comment_before_after_key(i + 1, before='\n')
             output_dict = {'name': "Matus Rusnak ID 116286", 'pcap_name': self.file_name, "packets": packets_dict}
-            yaml.dump(output_dict, file)
-            file.write('\n')
 
             statistics_list = []
             for k, v in self.unique_ipv4_ips.items():
@@ -70,9 +82,13 @@ class AnalyzeAll:
             statistics_dict = CS(statistics_list)
             for i in range(len(statistics_dict)):
                 statistics_dict.yaml_set_comment_before_after_key(i + 1, before='\n')
-            yaml.dump({"ipv4_senders": statistics_dict}, file)
-            file.write('\n')
 
             max_keys = [key for key, value in self.unique_ipv4_ips.items() if
                         value == max(self.unique_ipv4_ips.values())]
-            yaml.dump({"max_send_packets_by": max_keys},file)
+
+        with open("output-all.yaml", "w") as file:
+            yaml.dump(output_dict, file)
+            file.write('\n')
+            yaml.dump({"ipv4_senders": statistics_dict}, file)
+            file.write('\n')
+            yaml.dump({"max_send_packets_by": max_keys}, file)

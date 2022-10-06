@@ -6,6 +6,10 @@ import consts
 
 
 class AnalyzeUdp:
+    """
+    class that filter all packets other than ICMP protocol packets
+    and finds complete communications and partial communications
+    """
     analyzed_nodes = []
     frame_number = 1
     number_complete_comm = 1
@@ -22,7 +26,10 @@ class AnalyzeUdp:
 
         self._start()
 
-    def _start(self):
+    def _start(self) -> None:
+        """
+        mathod that filters node for protocol UDP and app protocol TFTP
+        """
         for packet in self.packets:
             node = data_node.Node()
             util.find_general_data(node, packet, self.frame_number)
@@ -34,4 +41,4 @@ class AnalyzeUdp:
                         "app_protocol") == "TFTP":
                     self.analyzed_nodes.append(node)
 
-        print('test')
+

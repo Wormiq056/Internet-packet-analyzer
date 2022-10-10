@@ -83,21 +83,19 @@ def find_frame_type(node: data_node.Node) -> None:
             node.frame_type = "IEEE 802.3 LLC"
 
 
-def compare_ip_nodes(node1: data_node.Node, node2: data_node.Node) -> bool:
+def compare_ports(src_port, dst_port, node) -> bool:
     """
     not yet needed
     :param node1:
     :param node2:
     :return:
     """
-    src1 = node1.other_attributes.get("src_ip")
-    dst1 = node1.other_attributes.get("dst_ip")
-    src2 = node2.other_attributes.get("src_ip")
-    dst2 = node2.other_attributes.get("dst_ip")
-    if (src1 == src2 and dst1 == dst2) or (src1 == dst2 and dst1 == src2):
+    src_node = node.other_attributes.get("src_port")
+    dst_node = node.other_attributes.get("dst_port")
+
+    if src_port == dst_node and dst_port == src_node:
         return True
-    else:
-        return False
+    return False
 
 
 def check_next_comm(node1: data_node.Node, node2: data_node.Node) -> bool:

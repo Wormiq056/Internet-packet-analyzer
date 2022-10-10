@@ -4,7 +4,7 @@ import analyze_all as all
 import analyze_icmp as icmp
 import analyze_udp as udp
 import analyze_arp as arp
-FILE_PATH = ".\AiS-materials\packets\\trace-15.pcap"
+FILE_PATH = ".\AiS-materials\packets\\frag.pcap"
 FILE_NAME = "trace-20.pcap"
 
 

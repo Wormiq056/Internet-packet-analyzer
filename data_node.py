@@ -26,7 +26,7 @@ class Node:
         this is a helper method that adjusts hexa frame for yaml output
         """
         new_frame = ' '.join(hexa_frame[i:i + 2] for i in range(0, len(hexa_frame), 2))
-        result_frame = '\n'.join(new_frame[i:i + 48] for i in range(0, len(new_frame), 48))
+        result_frame = '\n'.join(new_frame[i:i + 48] for i in range(0, len(new_frame), 48)).replace(" \n", "\n")
         result_frame += '\n'
         return LiteralScalarString(result_frame.upper())
 

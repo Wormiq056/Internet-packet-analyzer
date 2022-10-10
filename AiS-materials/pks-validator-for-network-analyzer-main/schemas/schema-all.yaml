@@ -43,6 +43,7 @@ packet:
   protocol: >
     any(str(equals='ICMP', ignore_case=True),
     str(equals='IGMP', ignore_case=True),
+    str(equals='PIM', ignore_case=True),
     str(equals='TCP', ignore_case=True),
     str(equals='UDP', ignore_case=True),
     required=False)
@@ -59,7 +60,6 @@ packet:
     str(equals='HTTP', ignore_case=True),
     str(equals='POP3', ignore_case=True),
     str(equals='NNTP', ignore_case=True),
-    str(equals='NETBIOS-SSN', ignore_case=True),
     str(equals='IMAP', ignore_case=True),
     str(equals='BGP', ignore_case=True),
     str(equals='LDAP', ignore_case=True),
@@ -69,10 +69,14 @@ packet:
     str(equals='TFTP', ignore_case=True),
     str(equals='NETBIOS-NS', ignore_case=True),
     str(equals='NETBIOS-DGM', ignore_case=True),
+    str(equals='NETBIOS-SSN', ignore_case=True),
+    str(equals='SSDP', ignore_case=True),
     str(equals='SNMP', ignore_case=True),
     str(equals='SNMP-TRAP', ignore_case=True),
     str(equals='SYSLOG', ignore_case=True),
     str(equals='RIP', ignore_case=True),
+    str(equals='DB-LSP-DISC', ignore_case=True),
+    str(equals='MDNS', ignore_case=True),
     str(equals='TRACEROUTE', ignore_case=True), required=False)
   hexa_frame: hexdump()
 

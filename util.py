@@ -42,7 +42,7 @@ def find_general_data(node: data_node.Node, packet: str, frame_number: int) -> N
     node.raw_hexa_frame = packet
     if (len(packet) / 2) < 60:
         node.len_frame_medium = 64
-        node.len_frame_pcap = 60
+        node.len_frame_pcap = int((len(packet) / 2))
     else:
         node.len_frame_pcap = int(len(packet) / 2)
         node.len_frame_medium = int(node.len_frame_pcap + 4)
@@ -55,6 +55,15 @@ def convert_to_decimal(hex: str) -> int:
     :return: decimal value
     """
     return int(hex, base=16)
+
+
+def convert_decimal_to_binary(dec: int) -> bin:
+    num_of_bits = 16
+    return bin(dec)[2:].zfill(num_of_bits)
+
+
+def convert_binary_todecimal(bin: bin) -> int:
+    return int(bin)
 
 
 def find_frame_type(node: data_node.Node) -> None:

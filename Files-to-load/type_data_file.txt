@@ -75,7 +75,8 @@
             "43": "IPPC",
             "60": "SCC-SP",
             "76": "STP",
-            "11": "UDP"
+            "11": "UDP",
+            "67": "PIM"
         }
     ],
     "tcp_udp_ports": [
@@ -92,7 +93,7 @@
             "443": "HTTPS",
             "179": "BGP",
             "110": "POP3",
-            "139": "NETBIOS_SSN",
+            "139": "NETBIOS-SSN",
             "389": "LDAP",
             "67": "DHCP",
             "68": "DHCP",
@@ -104,16 +105,22 @@
             "514": "SYSLOG",
             "520": "RIP",
             "33434": "TRACEROUTE",
-            "220": "IMAP"
+            "220": "IMAP",
+            "1900": "SSDP",
+            "17500": "DP-LSP-DISC",
+            "5353": "MDNS"
         }
     ],
     "icmp_types": [
         {
-            "0": "ECHO REPLY",
-            "3": "DESTINATION UNREACHABLE",
-            "5": "REDIRECT",
-            "8": "ECHO",
-            "9": "ROUTER ADVERTISEMENT",
+            "00": "ECHO REPLY",
+            "01": "Reserved",
+            "02": "Reserved",
+            "03": "DESTINATION UNREACHABLE",
+            "05": "REDIRECT",
+            "04": "Source Quench",
+            "08": "ECHO REQUEST",
+            "09": "ROUTER ADVERTISEMENT",
             "10": "ROUTER SOLICITATION",
             "11": "TIME EXCEEDED",
             "12": "PARAMETER PROBLEM",

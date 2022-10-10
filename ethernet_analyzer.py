@@ -37,6 +37,22 @@ class EthernetAnalyzer:
         node.other_attributes["dst_ip"] = util.get_ip_adress(
             node.raw_hexa_frame[consts.ARP_DST_START:consts.ARP_DST_END])
 
+    def process_icmp(self, node: data_node.Node):
+        icmp_type = self.txt_loader.icmp_types.get(node.raw_hexa_frame[consts.ICMP_TYPE_START:consts.ICMP_TYPE_END])
+        if icmp_type is not None:
+            node.other_attributes["icmp_type"] = icmp_type
+
+        node.other_attributes["id"] = util.convert_to_decimal(
+            node.raw_hexa_frame[consts.ICMP_ID_START:consts.ICMP_ID_END])
+        flags_binary = util.convert_decimal_to_binary(
+            util.convert_to_decimal(node.raw_hexa_frame[consts.ICMP_FLAGS_START:consts.ICMP_FLAGS_END]))
+        node.other_attributes["frag_offset"] = util.convert_binary_todecimal(flags_binary[:3])
+        if flags_binary[2] == '1':
+            node.other_attributes["flags_mf"] = True
+
+        else:
+            node.other_attributes["flags_mf"] = False
+
     def process_tcp_udp(self, node: data_node.Node) -> None:
         """
         this methods finds src and dst ports if packet protol is TCP or UDP
@@ -63,3 +79,5 @@ class EthernetAnalyzer:
 
         if ipv4_protocol == "TCP" or ipv4_protocol == "UDP":
             self.process_tcp_udp(node)
+        elif ipv4_protocol == "ICMP":
+            self.process_icmp(node)

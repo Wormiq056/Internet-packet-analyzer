@@ -44,9 +44,9 @@ class AnalyzeUdp:
                         self.tftp_nodes.append(node)
                     else:
                         self.udp_nodes.append(node)
-        print('test')
+
         self.find_communications()
-        print('test')
+
         self.output()
 
     def find_start_of_comm(self):
@@ -107,7 +107,7 @@ class AnalyzeUdp:
             self.number_complete_comm += 1
             complete_comm_list.append(dict_to_append)
 
-        output_dict = {'name': 'Matus Rusnak ID 116286', 'pcap_name': self.file_name, 'filter_name': 'ICMP',
+        output_dict = {'name': 'Matus Rusnak ID 116286', 'pcap_name': self.file_name, 'filter_name': 'UDP',
                        'complete_comms': complete_comm_list}
 
         with open("output_udp.yaml", "w") as file:

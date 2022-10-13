@@ -38,7 +38,12 @@ class EthernetAnalyzer:
         node.other_attributes["dst_ip"] = util.get_ip_adress(
             node.raw_hexa_frame[consts.ARP_DST_START:consts.ARP_DST_END])
 
-    def process_icmp(self, node: data_node.Node):
+    def process_icmp(self, node: data_node.Node) -> None:
+        """
+        this method processes icmp node
+        finds icmp type - if packet is fragmented gets type from original fragment
+        icmp ip, frag offset and if packet is fragmented
+        """
         icmp_type = self.txt_loader.icmp_types.get(node.raw_hexa_frame[consts.ICMP_TYPE_START:consts.ICMP_TYPE_END])
         icmp_id = util.convert_to_decimal(
             node.raw_hexa_frame[consts.ICMP_ID_START:consts.ICMP_ID_END])

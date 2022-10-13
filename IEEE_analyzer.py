@@ -11,7 +11,7 @@ class IeeeAnalyzer:
     def __init__(self, txt_loader: txt_file_loader.TxtFileLoader) -> None:
         self.txt_loader = txt_loader
 
-    def process_LLC_SNAP(self, node):
+    def process_LLC_SNAP(self, node) -> None:
         """
         method that finds pid for IEEE LLC & SNAP packet
         """
@@ -21,7 +21,7 @@ class IeeeAnalyzer:
         else:
             node.other_attributes["pid"] = pid_type
 
-    def process_LLC(self, node):
+    def process_LLC(self, node) -> None:
         """
         method that finds sap for IEEE LLC packet
         """

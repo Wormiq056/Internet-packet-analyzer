@@ -2,7 +2,7 @@ import data_node
 import consts
 
 """
-this file contains many helper functions that are general, meaning are used in multiple other files
+this file contains many helper functions that are general, meaning are used in multiple other modules
 """
 
 
@@ -58,11 +58,21 @@ def convert_to_decimal(hex: str) -> int:
 
 
 def convert_decimal_to_binary(dec: int) -> bin:
+    """
+    simple helper function which converts decimal into a binary
+    :param dec: decimal number to convert
+    :return: input in binary
+    """
     num_of_bits = 16
     return bin(dec)[2:].zfill(num_of_bits)
 
 
 def convert_binary_todecimal(bin: bin) -> int:
+    """
+    function which converts binary to decimal
+    :param bin: number to convert
+    :return: decimal output
+    """
     return int(bin)
 
 

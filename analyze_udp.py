@@ -8,17 +8,14 @@ import ruamel.yaml
 
 class AnalyzeUdp:
     """
-    class that filter all packets other than ICMP protocol packets
-    and finds complete communications and partial communications
+    class that filter all packets other than UDP protocol packets
+    and finds complete communications
     """
     tftp_nodes = []
     udp_nodes = []
     frame_number = 1
     number_complete_comm = 1
-    number_partial_comm = 1
     complete_comms = []
-    partial_comms = []
-    checked_ips = {}
 
     def __init__(self, packets: list, file_name: str) -> None:
         self.packets = packets
@@ -30,37 +27,52 @@ class AnalyzeUdp:
 
     def _start(self) -> None:
         """
-        mathod that filters node for protocol UDP and app protocol TFTP
+        method that filters node for protocol UDP and app protocol TFTP
         """
         for packet in self.packets:
             node = data_node.Node()
             util.find_general_data(node, packet, self.frame_number)
-            self.frame_number += 1
-            util.find_frame_type(node)
-            if node.frame_type == "ETHERNET II":
-                self.ethernet_analyzer.process_ethernet(node)
-                if node.other_attributes.get("protocol") == "UDP":
-                    if node.other_attributes.get("app_protocol") == "TFTP":
-                        self.tftp_nodes.append(node)
-                    else:
-                        self.udp_nodes.append(node)
+            if node.raw_hexa_frame[:consts.DST_END].upper() == "01000C000000":
+                self.frame_number += 1
+                continue
+            else:
+                self.frame_number += 1
+                util.find_frame_type(node)
+                if node.frame_type == "ETHERNET II":
+                    self.ethernet_analyzer.process_ethernet(node)
+                    if node.other_attributes.get("protocol") == "UDP":
+                        if node.other_attributes.get("app_protocol") == "TFTP":
+                            self.tftp_nodes.append(node)
+                        else:
+                            self.udp_nodes.append(node)
 
         self.find_communications()
 
         self.output()
 
-    def find_start_of_comm(self):
+    def find_start_of_comm(self) -> data_node.Node:
+        """
+        helper method that finds start of communication
+        :return: node which starts communication
+        """
         for node in self.udp_nodes:
             if node.other_attributes.get("dst_port") == 69:
                 return node
 
     def find_dst_port(self, src_port: int) -> int:
+        """
+        helper method that finds dst port for given src port
+        :param src_port: port of start node
+        :return: dst port
+        """
         for node in self.udp_nodes:
             if node.other_attributes.get("dst_port") == src_port:
                 return node.other_attributes.get("src_port")
 
     def check_end_of_comm(self, node) -> bool:
-
+        """
+        not used
+        """
         data_len = util.convert_to_decimal(node.raw_hexa_frame[consts.TFTP_LEN_START:consts.TFTP_LEN_END])
 
         if data_len < 512:
@@ -68,8 +80,10 @@ class AnalyzeUdp:
             return True
         return False
 
-    def find_communications(self):
-
+    def find_communications(self) -> None:
+        """
+        method that finds communication in filtered nodes
+        """
         for start_node in self.tftp_nodes:
             src_port = start_node.other_attributes.get("src_port")
             dst_port = self.find_dst_port(src_port)
@@ -86,10 +100,9 @@ class AnalyzeUdp:
             communication.insert(0, start_node)
             self.complete_comms.append(communication)
 
-
     def output(self) -> None:
         """
-        method that outputs complete and partial communications into output_icmp.yaml
+        method that outputs complete and partial communications into output_udp.yaml
         """
         CS = ruamel.yaml.comments.CommentedSeq
         yaml = ruamel.yaml.YAML()

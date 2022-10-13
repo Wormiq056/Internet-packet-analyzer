@@ -15,7 +15,7 @@ class Node:
 
     hexa_frame = str
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         dictionary other attributes is used to storing specific information for packet type
         """

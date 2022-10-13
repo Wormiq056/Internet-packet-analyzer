@@ -1,4 +1,6 @@
 name: Matus Rusnak ID 116286
 pcap_name: trace-20.pcap
-filter_name: UDP
+filter_name: ICMP
 complete_comms: []
+
+partial_comms: []

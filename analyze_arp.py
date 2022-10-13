@@ -25,16 +25,14 @@ class AnalyzeArp:
     def _start(self):
         for packet in self.packets:
             node = data_node.Node()
+            if packet[:consts.DST_END].upper() == "01000C000000":
+                packet = packet[52:]
             util.find_general_data(node, packet, self.frame_number)
-            if node.raw_hexa_frame[:consts.DST_END].upper() == "01000C000000":
-                self.frame_number += 1
-                continue
-            else:
-                self.frame_number += 1
-                util.find_frame_type(node)
-                if node.frame_type == "ETHERNET II":
-                    self.ethernet_analyzer.process_ethernet(node)
-                    if node.other_attributes.get("ether_type") == "ARP":
-                        self.analyzed_nodes.append(node)
+            self.frame_number += 1
+            util.find_frame_type(node)
+            if node.frame_type == "ETHERNET II":
+                self.ethernet_analyzer.process_ethernet(node)
+                if node.other_attributes.get("ether_type") == "ARP":
+                    self.analyzed_nodes.append(node)
 
         print('test')

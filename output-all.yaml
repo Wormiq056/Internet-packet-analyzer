@@ -312,6 +312,21 @@ packets:
       04 00 03 00 05 40 00 04 00 0A 00 16 47 02 24 1A
       00 00 00 00 00 00 00 00 00 00 00 00
 
+  - frame_number: 18
+    len_frame_pcap: 90
+    len_frame_medium: 94
+    frame_type: IEEE 802.3 LLC & SNAP
+    src_mac: 00:16:47:02:24:1A
+    dst_mac: 01:00:0C:00:00:00
+    pid: Unknown pid
+    hexa_frame: |
+      01 00 0C 00 00 00 00 16 47 02 24 1A 00 4C AA AA
+      03 00 00 0C 00 03 00 00 00 00 01 00 0C CC CC CC
+      00 16 47 02 24 1A 00 22 AA AA 03 00 00 0C 20 04
+      01 00 01 00 05 00 00 02 00 05 04 00 03 00 05 40
+      00 04 00 0A 00 16 47 02 24 1A 00 0E 00 14 00 02
+      00 0F 00 00 00 00 8D 16 CB 79
+
   - frame_number: 19
     len_frame_pcap: 60
     len_frame_medium: 64
@@ -4064,6 +4079,21 @@ packets:
       03 00 00 0C 20 04 01 00 01 00 05 00 00 02 00 05
       04 00 03 00 05 40 00 04 00 0A 00 16 47 02 24 1A
       00 00 00 00 00 00 00 00 00 00 00 00
+
+  - frame_number: 82
+    len_frame_pcap: 90
+    len_frame_medium: 94
+    frame_type: IEEE 802.3 LLC & SNAP
+    src_mac: 00:16:47:02:24:1A
+    dst_mac: 01:00:0C:00:00:00
+    pid: Unknown pid
+    hexa_frame: |
+      01 00 0C 00 00 00 00 16 47 02 24 1A 00 4C AA AA
+      03 00 00 0C 00 03 00 00 00 00 01 00 0C CC CC CC
+      00 16 47 02 24 1A 00 22 AA AA 03 00 00 0C 20 04
+      01 00 01 00 05 00 00 02 00 05 04 00 03 00 05 40
+      00 04 00 0A 00 16 47 02 24 1A 00 0E 00 14 00 02
+      00 0F 00 00 00 00 8D 16 CB 79
 
   - frame_number: 83
     len_frame_pcap: 60

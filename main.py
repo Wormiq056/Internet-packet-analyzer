@@ -6,15 +6,15 @@ import analyze_udp as udp
 import analyze_arp as arp
 import analyze_tcp as tcp
 
-FILE_PATH = ".\AiS-materials\packets\\trace-26.pcap"
+FILE_PATH = ".\AiS-materials\packets\\trace-1.pcap"
 FILE_NAME = "trace-20.pcap"
 
 
 def main():
     # analyze_icmp()
-    analyze_all()
+    #analyze_all()
     # analyze_udp()
-    # analyze_arp()
+    analyze_arp()
     #analyze_tcp()
 
 

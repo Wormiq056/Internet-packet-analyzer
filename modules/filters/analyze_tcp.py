@@ -1,8 +1,7 @@
-import txt_file_loader
-import util
-import data_node
-import ethernet_analyzer
-import consts
+from modules import txt_file_loader
+from util import util, consts
+from model import packet_frame
+from modules.analyzers import ethernet_analyzer
 from collections import defaultdict
 import ruamel.yaml
 
@@ -34,7 +33,7 @@ class AnalyzeTcp:
 
         """
         for packet in self.packets:
-            node = data_node.Node()
+            node = packet_frame.Node()
             if packet[:consts.DST_END].upper() == "01000C000000":
                 packet = packet[52:]
             util.find_general_data(node, packet, self.frame_number)
@@ -213,7 +212,7 @@ class AnalyzeTcp:
             partial_list_cs.yaml_set_comment_before_after_key(i + 1, before='\n')
         final_partial_dict = {"partial_comms": [{"number_comm": 1}, {"packets": partial_list_cs}]}
 
-        with open("output_tcp.yaml", "w") as file:
+        with open("./out/output_tcp.yaml", "w") as file:
             yaml.dump(output_dict, file)
             file.write('\n')
             yaml.dump(final_partial_dict, file)

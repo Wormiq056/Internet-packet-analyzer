@@ -1,5 +1,5 @@
-import data_node
-import consts
+from model import packet_frame
+from util import consts
 
 """
 this file contains many helper functions that are general, meaning are used in multiple other modules
@@ -29,7 +29,7 @@ def adjust_mac_adress(adress: str) -> str:
     return result.upper()
 
 
-def find_general_data(node: data_node.Node, packet: str, frame_number: int) -> None:
+def find_general_data(node: packet_frame.Node, packet: str, frame_number: int) -> None:
     """
     this helper method gives given node general packet information
     :param node: object to store data in
@@ -76,7 +76,7 @@ def convert_binary_todecimal(bin: bin) -> int:
     return int(bin, 2)
 
 
-def find_frame_type(node: data_node.Node) -> None:
+def find_frame_type(node: packet_frame.Node) -> None:
     """
     helper functions which finds correct frame time for given packet
     :param node: node which contains packet information

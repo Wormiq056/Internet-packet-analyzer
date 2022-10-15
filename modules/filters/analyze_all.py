@@ -1,10 +1,8 @@
 import ruamel.yaml
-import util
-import data_node
-import ethernet_analyzer
-import txt_file_loader
-import IEEE_analyzer
-import consts
+from util import util, consts
+from model import packet_frame
+from modules.analyzers import IEEE_analyzer, ethernet_analyzer
+from modules import txt_file_loader
 
 
 class AnalyzeAll:
@@ -28,7 +26,7 @@ class AnalyzeAll:
         this method finds general information of packets and its frame time
         """
         for packet in self.packets:
-            node = data_node.Node()
+            node = packet_frame.Node()
             if packet[:consts.DST_END].upper() == "01000C000000":
                 packet = packet[52:]
             util.find_general_data(node, packet, self.frame_number)
@@ -51,7 +49,7 @@ class AnalyzeAll:
                 else:
                     self.unique_ipv4_ips[node.other_attributes.get("src_ip")] += 1
 
-    def process_packet_by_frame(self, node: data_node.Node) -> None:
+    def process_packet_by_frame(self, node: packet_frame.Node) -> None:
         """
         this method chooses which analyzer should be called based on frame type
         """
@@ -90,7 +88,7 @@ class AnalyzeAll:
         max_keys = [key for key, value in self.unique_ipv4_ips.items() if
                     value == max(self.unique_ipv4_ips.values())]
 
-        with open("output-all.yaml", "w") as file:
+        with open("./out/output-all.yaml", "w") as file:
             yaml.dump(output_dict, file)
             file.write('\n')
             yaml.dump({"ipv4_senders": statistics_dict}, file)

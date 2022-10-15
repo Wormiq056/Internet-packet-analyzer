@@ -1,6 +1,6 @@
-import txt_file_loader
-import consts
-import data_node
+from modules import txt_file_loader
+from util import consts
+from model import packet_frame
 
 
 class IeeeAnalyzer:
@@ -12,7 +12,7 @@ class IeeeAnalyzer:
     def __init__(self, txt_loader: txt_file_loader.TxtFileLoader) -> None:
         self.txt_loader = txt_loader
 
-    def process_LLC_SNAP(self, node: data_node.Node) -> None:
+    def process_LLC_SNAP(self, node: packet_frame.Node) -> None:
         """
         method that finds pid for IEEE LLC & SNAP packet
         """
@@ -20,7 +20,7 @@ class IeeeAnalyzer:
         if pid_type:
             node.other_attributes["pid"] = pid_type
 
-    def process_LLC(self, node: data_node.Node) -> None:
+    def process_LLC(self, node: packet_frame.Node) -> None:
         """
         method that finds sap for IEEE LLC packet
         """

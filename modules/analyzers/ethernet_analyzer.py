@@ -1,7 +1,6 @@
-import data_node
-import util
-import txt_file_loader
-import consts
+from model import packet_frame
+from util import util, consts
+from modules import txt_file_loader
 
 
 class EthernetAnalyzer:
@@ -13,7 +12,7 @@ class EthernetAnalyzer:
     def __init__(self, txt_loader: txt_file_loader.TxtFileLoader) -> None:
         self.txt_loader = txt_loader
 
-    def process_ethernet(self, node: data_node.Node) -> None:
+    def process_ethernet(self, node: packet_frame.Node) -> None:
         """
         this method finds ethernet type for given packet
         """
@@ -27,7 +26,7 @@ class EthernetAnalyzer:
         if ether_type == "ARP":
             self.process_arp(node)
 
-    def process_arp(self, node: data_node.Node) -> None:
+    def process_arp(self, node: packet_frame.Node) -> None:
         """
         this method find arp opcode if ethernet type is ARP
         """
@@ -38,7 +37,7 @@ class EthernetAnalyzer:
         node.other_attributes["dst_ip"] = util.get_ip_adress(
             node.raw_hexa_frame[consts.ARP_DST_START:consts.ARP_DST_END])
 
-    def process_icmp(self, node: data_node.Node) -> None:
+    def process_icmp(self, node: packet_frame.Node) -> None:
         """
         this method processes icmp node
         finds icmp type - if packet is fragmented gets type from original fragment
@@ -61,7 +60,7 @@ class EthernetAnalyzer:
             node.other_attributes["flags_mf"] = False
             node.other_attributes["icmp_type"] = self.icmp_type_by_id.get(icmp_id)
 
-    def process_tcp_udp(self, node: data_node.Node) -> None:
+    def process_tcp_udp(self, node: packet_frame.Node) -> None:
         """
         this methods finds src and dst ports if packet protol is TCP or UDP
         """
@@ -75,7 +74,7 @@ class EthernetAnalyzer:
         if self.txt_loader.tcp_upd_ports.get(str(dst_port)) is not None:
             node.other_attributes["app_protocol"] = self.txt_loader.tcp_upd_ports.get(str(dst_port))
 
-    def process_ipv4(self, node: data_node.Node) -> None:
+    def process_ipv4(self, node: packet_frame.Node) -> None:
         """
         this method finds src IP, dst IP and IPv4 protocol if packet ethernet type is IPv4
         """

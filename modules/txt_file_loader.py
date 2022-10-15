@@ -25,6 +25,6 @@ class TxtFileLoader:
         self.icmp_types = all_data["icmp_types"][0]
 
     def _load_file(self) -> dict:
-        with open(".\Files-to-load\\type_data_file.txt", "r") as file:
+        with open("./data_files/type_data_file.txt", "r") as file:
             data = json.load(file)
             return data

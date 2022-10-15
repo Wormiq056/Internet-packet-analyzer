@@ -106,25 +106,3 @@ def compare_ports(src_port: int, dst_port: int, node) -> bool:
     if src_port == dst_node and dst_port == src_node or src_port == src_node and dst_port == dst_node:
         return True
     return False
-
-
-def check_next_comm(node1: data_node.Node, node2: data_node.Node) -> bool:
-    src1 = node1.other_attributes.get("src_ip")
-    dst1 = node1.other_attributes.get("dst_ip")
-    src2 = node2.other_attributes.get("src_ip")
-    dst2 = node2.other_attributes.get("dst_ip")
-    if src1 == dst2 and dst1 == src2:
-        return True
-    else:
-        return False
-
-
-def check_if_partial_comm(node1: data_node.Node, node2: data_node.Node) -> bool:
-    src1 = node1.other_attributes.get("src_ip")
-    dst1 = node1.other_attributes.get("dst_ip")
-    src2 = node2.other_attributes.get("src_ip")
-    dst2 = node2.other_attributes.get("dst_ip")
-    if src1 == src2 and dst1 == dst2:
-        return True
-    else:
-        return False

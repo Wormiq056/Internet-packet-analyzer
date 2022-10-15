@@ -66,29 +66,29 @@ class AnalyzeAll:
         """
         this method writes packet information and ip statistics to yaml file
         """
-        with open("output-all.yaml", "w") as file:
-            CS = ruamel.yaml.comments.CommentedSeq
-            yaml = ruamel.yaml.YAML()
-            yaml.indent(sequence=4, offset=2)
 
-            file_list = []
-            for node in self.finished_nodes:
-                node_dict = node.return_dict()
-                file_list.append(node_dict)
-            packets_dict = CS(file_list)
-            for i in range(len(packets_dict)):
-                packets_dict.yaml_set_comment_before_after_key(i + 1, before='\n')
-            output_dict = {'name': "Matus Rusnak ID 116286", 'pcap_name': self.file_name, "packets": packets_dict}
+        CS = ruamel.yaml.comments.CommentedSeq
+        yaml = ruamel.yaml.YAML()
+        yaml.indent(sequence=4, offset=2)
 
-            statistics_list = []
-            for k, v in self.unique_ipv4_ips.items():
-                statistics_list.append({"node": k, "number_of_sent_packets": v})
-            statistics_dict = CS(statistics_list)
-            for i in range(len(statistics_dict)):
-                statistics_dict.yaml_set_comment_before_after_key(i + 1, before='\n')
+        file_list = []
+        for node in self.finished_nodes:
+            node_dict = node.return_dict()
+            file_list.append(node_dict)
+        packets_dict = CS(file_list)
+        for i in range(len(packets_dict)):
+            packets_dict.yaml_set_comment_before_after_key(i + 1, before='\n')
+        output_dict = {'name': "Matus Rusnak ID 116286", 'pcap_name': self.file_name, "packets": packets_dict}
 
-            max_keys = [key for key, value in self.unique_ipv4_ips.items() if
-                        value == max(self.unique_ipv4_ips.values())]
+        statistics_list = []
+        for k, v in self.unique_ipv4_ips.items():
+            statistics_list.append({"node": k, "number_of_sent_packets": v})
+        statistics_dict = CS(statistics_list)
+        for i in range(len(statistics_dict)):
+            statistics_dict.yaml_set_comment_before_after_key(i + 1, before='\n')
+
+        max_keys = [key for key, value in self.unique_ipv4_ips.items() if
+                    value == max(self.unique_ipv4_ips.values())]
 
         with open("output-all.yaml", "w") as file:
             yaml.dump(output_dict, file)

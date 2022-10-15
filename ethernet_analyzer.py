@@ -61,7 +61,6 @@ class EthernetAnalyzer:
             node.other_attributes["flags_mf"] = False
             node.other_attributes["icmp_type"] = self.icmp_type_by_id.get(icmp_id)
 
-
     def process_tcp_udp(self, node: data_node.Node) -> None:
         """
         this methods finds src and dst ports if packet protol is TCP or UDP

@@ -67,17 +67,6 @@ class AnalyzeUdp:
             if node.other_attributes.get("dst_port") == src_port:
                 return node.other_attributes.get("src_port")
 
-    def check_end_of_comm(self, node) -> bool:
-        """
-        not used
-        """
-        data_len = util.convert_to_decimal(node.raw_hexa_frame[consts.TFTP_LEN_START:consts.TFTP_LEN_END])
-
-        if data_len < 512:
-            print('lul')
-            return True
-        return False
-
     def find_communications(self) -> None:
         """
         method that finds communication in filtered nodes

@@ -48,7 +48,10 @@ class AnalyzeArp:
         self._check_requests()
         self.output()
 
-    def _check_requests(self):
+    def _check_requests(self) -> None:
+        """
+        this method checks if reply has not been called to ip that previous request was called
+        """
         for node in self.partial_comms:
             for comm in self.complete_comms:
                 if comm[-1].other_attributes.get("src_ip") == node.other_attributes.get("dst_ip"):
@@ -60,8 +63,7 @@ class AnalyzeArp:
 
     def _sort_by_ip(self) -> None:
         """
-        method that sorts packets by their ip address
-
+        method that sorts packets by their ip address and checks if they are already partial
         """
         for node in self.analyzed_nodes:
             if node.other_attributes.get("src_ip") == node.other_attributes.get("dst_ip"):
@@ -73,15 +75,14 @@ class AnalyzeArp:
             key = tuple(sorted([node.other_attributes.get("src_ip"), node.other_attributes.get("dst_ip")]))
             self.ip_bucket[key].append(node)
 
-    def _find_communications(self):
+    def _find_communications(self) -> None:
         """
         method that sends list of packets filtered by IP to be processed
-
         """
         for ip_bucket in self.ip_bucket.values():
             self._process_bucket(ip_bucket)
 
-    def _process_bucket(self, bucket):
+    def _process_bucket(self, bucket: list) -> None:
         """
         method that finds complete and partial communications by looping through filtered packets
         states indicate what next packet I am looking for

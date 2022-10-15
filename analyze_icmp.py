@@ -7,6 +7,7 @@ import ruamel.yaml
 from collections import defaultdict
 import itertools
 
+
 class AnalyzeIcmp:
     """
     class that filter all packets other than ICMP protocol packets
@@ -33,7 +34,6 @@ class AnalyzeIcmp:
     def _start(self) -> None:
         """
         this method filters packets for ICMP packets
-
         """
         for packet in self.packets:
             node = data_node.Node()
@@ -50,14 +50,18 @@ class AnalyzeIcmp:
         self.find_comms()
         self.output()
 
-    def sort_by_id(self):
+    def sort_by_id(self) -> None:
+        """
+        this method merges ip fragments based on id
+        """
         for node in self.analyzed_nodes:
             self.nodes_by_id[node.other_attributes.get("id")].append(node)
         self.merged_fragmented_nodes = list(self.nodes_by_id.values())
 
-
-
     def find_comms(self) -> None:
+        """
+        this method finds icmp request reply pairs for communications
+        """
         pair_dict = {}
         for merged_packet in self.merged_fragmented_nodes:
 
@@ -69,14 +73,12 @@ class AnalyzeIcmp:
             if merged_packet[-1].other_attributes.get("icmp_type") == "ECHO REPLY":
                 request = pair_dict.get(packet_id)
                 if request:
-                    self.complete_comms.append([request,merged_packet])
+                    self.complete_comms.append([request, merged_packet])
                     pair_dict[packet_id] = None
                 else:
                     self.partial_comms.append(merged_packet)
             else:
                 pair_dict[packet_id] = merged_packet
-
-
 
     def output(self) -> None:
         """
@@ -104,7 +106,6 @@ class AnalyzeIcmp:
 
         partial_list = []
         for node_list in self.partial_comms:
-
             partial_dict = {"number_comm": self.number_partial_comm, "packets": node_list[0].return_dict()}
             partial_list.append(partial_dict)
             self.number_partial_comm += 1

@@ -1,7 +1,7 @@
 import json
 
 
-class TxtFileLoader():
+class TxtFileLoader:
     """
     class that loads all protocol and type information from a external file
     these dictionaries are later used in program for packet analyzation

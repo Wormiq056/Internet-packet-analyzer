@@ -4,9 +4,10 @@ import data_node
 import ethernet_analyzer
 import consts
 import ruamel.yaml
+from collections import defaultdict
+import itertools
 
-
-class AnalyzeIcmp():
+class AnalyzeIcmp:
     """
     class that filter all packets other than ICMP protocol packets
     and finds complete communications and partial communications
@@ -18,6 +19,8 @@ class AnalyzeIcmp():
     complete_comms = []
     partial_comms = []
     checked_ips = {}
+    nodes_by_id = defaultdict(list)
+    merged_fragmented_nodes = []
 
     def __init__(self, packets: list, file_name: str) -> None:
         self.packets = packets
@@ -51,38 +54,44 @@ class AnalyzeIcmp():
             if node.frame_type == "ETHERNET II":
                 self.ethernet_analyzer.process_ethernet(node)
                 if node.other_attributes.get("protocol") == "ICMP":
-                    self.process_icmp_type(node)
                     self.analyzed_nodes.append(node)
-
+        self.sort_by_id()
         self.find_comms()
         self.output()
 
+    def sort_by_id(self):
+        for node in self.analyzed_nodes:
+            self.nodes_by_id[node.other_attributes.get("id")].append(node)
+        self.merged_fragmented_nodes = list(self.nodes_by_id.values())
+
+
+    def find_reply(self, seq_num: str) -> bool or data_node.Node:
+        for node in self.analyzed_nodes:
+            if node.other_attributes.get("icmp_type") == "ECHO REPLY":
+                if node.raw_hexa_frame[80:84] == seq_num:
+                    return node
+        return False
+
     def find_comms(self) -> None:
-        for i in range(len(self.analyzed_nodes)):
-            found_comm = False
-            communication = []
-            start_node = self.analyzed_nodes[i]
-            src_ip = str(start_node.other_attributes.get("src_ip"))
-            dst_ip = str(start_node.other_attributes.get("dst_ip"))
-            if self.checked_ips.get(src_ip + dst_ip) or self.checked_ips.get(dst_ip + src_ip):
+        pair_dict = {}
+        for merged_packet in self.merged_fragmented_nodes:
+
+            if merged_packet[0].other_attributes.get("icmp_type") != "ECHO REQUEST" and merged_packet[0] \
+                    .other_attributes.get("icmp_type") != "ECHO REPLY":
+                self.partial_comms.append(merged_packet)
                 continue
-            current_node = self.analyzed_nodes[i]
-            for j in range(i + 1, len(self.analyzed_nodes)):
-                if util.check_next_comm(current_node, self.analyzed_nodes[j]):
-                    communication.append(self.analyzed_nodes[j])
-                    found_comm = True
-                    current_node = self.analyzed_nodes[j]
-                elif util.check_if_partial_comm(current_node,
-                                                self.analyzed_nodes[j]) and current_node not in self.partial_comms:
-                    self.partial_comms.append(current_node)
-                    current_node = self.analyzed_nodes[j]
-            if found_comm:
-                communication.insert(0, start_node)
-                self.complete_comms.append(communication)
-                src_ip = str(start_node.other_attributes.get("src_ip"))
-                dst_ip = str(start_node.other_attributes.get("dst_ip"))
-                self.checked_ips[src_ip + dst_ip] = True
-                self.checked_ips[dst_ip + src_ip] = True
+            packet_id = merged_packet[0].raw_hexa_frame[consts.ICMP_PACKET_ID_START:consts.ICMP_PACKET_ID_END]
+            if merged_packet[0].other_attributes.get("icmp_type") == "ECHO REPLY":
+                request = pair_dict.get(packet_id)
+                if request:
+                    self.complete_comms.append([request,merged_packet])
+                    pair_dict[packet_id] = None
+                else:
+                    self.partial_comms.append(merged_packet)
+            else:
+                pair_dict[packet_id] = merged_packet
+
+
 
     def output(self) -> None:
         """
@@ -93,7 +102,8 @@ class AnalyzeIcmp():
         yaml.indent(sequence=4, offset=2)
         complete_comm_list = []
 
-        for comm in self.complete_comms:
+        for comm_list in self.complete_comms:
+            comm = list(itertools.chain(*comm_list))
             src_comm = comm[0].other_attributes.get("src_ip")
             dst_comm = comm[0].other_attributes.get("dst_ip")
             comm_CS = CS(node.return_dict() for node in comm)
@@ -108,8 +118,9 @@ class AnalyzeIcmp():
                        'complete_comms': complete_comm_list}
 
         partial_list = []
-        for node in self.partial_comms:
-            partial_dict = {"number_comm": self.number_partial_comm, "packets": node.return_dict()}
+        for node_list in self.partial_comms:
+
+            partial_dict = {"number_comm": self.number_partial_comm, "packets": node_list[0].return_dict()}
             partial_list.append(partial_dict)
             self.number_partial_comm += 1
 

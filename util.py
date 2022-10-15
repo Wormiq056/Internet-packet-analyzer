@@ -93,7 +93,7 @@ def find_frame_type(node: data_node.Node) -> None:
             node.frame_type = "IEEE 802.3 LLC"
 
 
-def compare_ports(src_port, dst_port, node) -> bool:
+def compare_ports(src_port: int, dst_port: int, node) -> bool:
     """
     not yet needed
     :param node1:
@@ -103,7 +103,7 @@ def compare_ports(src_port, dst_port, node) -> bool:
     src_node = node.other_attributes.get("src_port")
     dst_node = node.other_attributes.get("dst_port")
 
-    if src_port == dst_node and dst_port == src_node:
+    if src_port == dst_node and dst_port == src_node or src_port == src_node and dst_port == dst_node:
         return True
     return False
 

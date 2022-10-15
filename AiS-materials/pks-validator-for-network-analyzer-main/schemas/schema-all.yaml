@@ -1,4 +1,4 @@
-name: str(equals = 'PKS2022/23', ignore_case=True)
+name: str(equals = 'Matus Rusnak ID 116286', ignore_case=True)
 pcap_name: regex('^.*\.pcap$', min=1, ignore_case=True)
 packets: list(include('packet'), min=1, required=False)
 ipv4_senders: list(include('sender'), min=1, required=False)

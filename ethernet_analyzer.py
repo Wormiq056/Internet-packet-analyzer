@@ -45,13 +45,11 @@ class EthernetAnalyzer:
         icmp ip, frag offset and if packet is fragmented
         """
         icmp_type = self.txt_loader.icmp_types.get(node.raw_hexa_frame[consts.ICMP_TYPE_START:consts.ICMP_TYPE_END])
+
         icmp_id = util.convert_to_decimal(
             node.raw_hexa_frame[consts.ICMP_ID_START:consts.ICMP_ID_END])
         if icmp_type is not None:
             node.other_attributes["icmp_type"] = icmp_type
-            self.icmp_type_by_id[icmp_id] = icmp_type
-        else:
-            node.other_attributes["icmp_type"] = self.icmp_type_by_id.get(icmp_id)
         node.other_attributes["id"] = icmp_id
         flags_binary = util.convert_decimal_to_binary(
             util.convert_to_decimal(node.raw_hexa_frame[consts.ICMP_FLAGS_START:consts.ICMP_FLAGS_END]))

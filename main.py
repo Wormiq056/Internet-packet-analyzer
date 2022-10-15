@@ -5,16 +5,16 @@ import analyze_icmp as icmp
 import analyze_udp as udp
 import analyze_arp as arp
 import analyze_tcp as tcp
+FILE_NAME = "frag.pcap"
+FILE_PATH = ".\AiS-materials\packets\\"+FILE_NAME
 
-FILE_PATH = ".\AiS-materials\packets\\trace-1.pcap"
-FILE_NAME = "trace-20.pcap"
 
 
 def main():
-    # analyze_icmp()
+    analyze_icmp()
     #analyze_all()
-    # analyze_udp()
-    analyze_arp()
+    #analyze_udp()
+    # analyze_arp()
     #analyze_tcp()
 
 
@@ -60,7 +60,7 @@ def analyze_tcp() -> None:
     for packet in raw_packets:
         packets.append(hexlify(raw(packet)).decode())
 
-    tcp.AnalyzeTcp(packets, FILE_NAME, "HTTP")
+    tcp.AnalyzeTcp(packets, FILE_NAME, "FTP-CONTROL")
 
 
 if __name__ == '__main__':

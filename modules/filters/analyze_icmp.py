@@ -18,7 +18,6 @@ class AnalyzeIcmp:
     number_partial_comm = 1
     complete_comms = []
     partial_comms = []
-    checked_ips = {}
     nodes_by_id = defaultdict(list)
     merged_fragmented_nodes = []
 

@@ -93,7 +93,7 @@ def find_frame_type(node: packet_frame.Node) -> None:
             node.frame_type = "IEEE 802.3 LLC"
 
 
-def compare_ports(src_port: int, dst_port: int, node) -> bool:
+def compare_ports(src_port: int, dst_port: int, node: packet_frame.Node) -> bool:
     """
     not yet needed
     :param node1:

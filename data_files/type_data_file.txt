@@ -81,7 +81,7 @@
     ],
     "tcp_udp_ports": [
         {
-            "20": "FTP_DATA",
+            "20": "FTP-DATA",
             "21": "FTP-CONTROL",
             "22": "SSH",
             "23": "TELNET",

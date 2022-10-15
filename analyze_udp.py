@@ -114,7 +114,7 @@ class AnalyzeUdp:
             for i in range(len(comm_CS)):
                 comm_CS.yaml_set_comment_before_after_key(i + 1, before='\n')
             dict_to_append = {"number_comm": self.number_complete_comm, "src_comm": src_comm, "dst_comm": dst_comm,
-                              "packet": comm_CS}
+                              "packets": comm_CS}
             self.number_complete_comm += 1
             complete_comm_list.append(dict_to_append)
 

@@ -45,7 +45,18 @@ class AnalyzeArp:
 
         self._sort_by_ip()
         self._find_communications()
+        self._check_requests()
         self.output()
+
+    def _check_requests(self):
+        for node in self.partial_comms:
+            for comm in self.complete_comms:
+                if comm[-1].other_attributes.get("src_ip") == node.other_attributes.get("dst_ip"):
+                    if comm[-1].frame_number > node.frame_number:
+                        comm.append(node)
+                        comm.sort(key=lambda x: x.frame_number)
+                        self.partial_comms.remove(node)
+        self.partial_comms.sort(key=lambda x: x.frame_number)
 
     def _sort_by_ip(self) -> None:
         """
@@ -125,7 +136,7 @@ class AnalyzeArp:
 
         partial_list = []
         for node in self.partial_comms:
-            partial_dict = {"number_comm": self.number_partial_comm, "packet": node.return_dict()}
+            partial_dict = {"number_comm": self.number_partial_comm, "packets": node.return_dict()}
             partial_list.append(partial_dict)
             self.number_partial_comm += 1
 

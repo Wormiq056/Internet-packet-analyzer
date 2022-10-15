@@ -53,6 +53,12 @@ class AnalyzeArp:
 
         """
         for node in self.analyzed_nodes:
+            if node.other_attributes.get("src_ip") == node.other_attributes.get("dst_ip"):
+                self.partial_comms.append(node)
+                continue
+            elif node.other_attributes.get("src_ip") == "0.0.0.0":
+                self.partial_comms.append(node)
+                continue
             key = tuple(sorted([node.other_attributes.get("src_ip"), node.other_attributes.get("dst_ip")]))
             self.ip_bucket[key].append(node)
 
@@ -89,11 +95,10 @@ class AnalyzeArp:
                     comm = []
                     current_state = 0
                 else:
-                    self.partial_comms.append(comm[0])
-                    comm = [node]
-                    current_state = 1
+                    comm.append(node)
         if comm:
-            self.partial_comms.append(comm[0])
+            for node in comm:
+                self.partial_comms.append(node)
 
     def output(self) -> None:
         """

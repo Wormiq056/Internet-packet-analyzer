@@ -5,17 +5,17 @@ import analyze_icmp as icmp
 import analyze_udp as udp
 import analyze_arp as arp
 import analyze_tcp as tcp
-FILE_NAME = "trace-10.pcap"
+FILE_NAME = "frag.pcap"
 FILE_PATH = ".\AiS-materials\packets\\"+FILE_NAME
 
 
 
 def main():
-    #analyze_icmp()
+    analyze_icmp()
     #analyze_all()
     #analyze_udp()
     #analyze_arp()
-    analyze_tcp()
+    #analyze_tcp()
 
 
 def analyze_arp() -> None:

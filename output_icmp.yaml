@@ -5,7 +5,7 @@ complete_comms:
   - number_comm: 1
     src_comm: 131.94.133.12
     dst_comm: 131.94.57.61
-    packet:
+    packets:
       - frame_number: 1
         len_frame_pcap: 1514
         len_frame_medium: 1518
@@ -16,9 +16,8 @@ complete_comms:
         src_ip: 131.94.133.12
         dst_ip: 131.94.57.61
         protocol: ICMP
-        icmp_type: ECHO REQUEST
         id: 55011
-        frag_offset: 1
+        frag_offset: 0
         flags_mf: true
         hexa_frame: |
           00 00 5E 00 01 1D 00 1E 4F E6 16 49 08 00 45 00
@@ -128,7 +127,7 @@ complete_comms:
         dst_ip: 131.94.57.61
         protocol: ICMP
         id: 55011
-        frag_offset: 1
+        frag_offset: 1480
         flags_mf: true
         hexa_frame: |
           00 00 5E 00 01 1D 00 1E 4F E6 16 49 08 00 45 00
@@ -238,8 +237,9 @@ complete_comms:
         dst_ip: 131.94.57.61
         protocol: ICMP
         id: 55011
-        frag_offset: 0
+        frag_offset: 2960
         flags_mf: false
+        icmp_type: ECHO REQUEST
         hexa_frame: |
           00 00 5E 00 01 1D 00 1E 4F E6 16 49 08 00 45 00
           04 70 D6 E3 01 72 40 01 D9 31 83 5E 85 0C 83 5E
@@ -324,9 +324,8 @@ complete_comms:
         src_ip: 131.94.57.61
         dst_ip: 131.94.133.12
         protocol: ICMP
-        icmp_type: ECHO REPLY
         id: 2073
-        frag_offset: 1
+        frag_offset: 0
         flags_mf: true
         hexa_frame: |
           00 1E 4F E6 16 49 00 00 5E 00 01 1D 08 00 45 00
@@ -436,7 +435,7 @@ complete_comms:
         dst_ip: 131.94.133.12
         protocol: ICMP
         id: 2073
-        frag_offset: 1
+        frag_offset: 1480
         flags_mf: true
         hexa_frame: |
           00 1E 4F E6 16 49 00 00 5E 00 01 1D 08 00 45 00
@@ -546,8 +545,9 @@ complete_comms:
         dst_ip: 131.94.133.12
         protocol: ICMP
         id: 2073
-        frag_offset: 0
+        frag_offset: 2960
         flags_mf: false
+        icmp_type: ECHO REPLY
         hexa_frame: |
           00 1E 4F E6 16 49 00 00 5E 00 01 1D 08 00 45 00
           04 70 08 19 01 72 FA 01 ED FB 83 5E 39 3D 83 5E
@@ -624,7 +624,7 @@ complete_comms:
   - number_comm: 2
     src_comm: 131.94.133.12
     dst_comm: 131.94.57.61
-    packet:
+    packets:
       - frame_number: 7
         len_frame_pcap: 1514
         len_frame_medium: 1518
@@ -635,9 +635,8 @@ complete_comms:
         src_ip: 131.94.133.12
         dst_ip: 131.94.57.61
         protocol: ICMP
-        icmp_type: ECHO REQUEST
         id: 55012
-        frag_offset: 1
+        frag_offset: 0
         flags_mf: true
         hexa_frame: |
           00 00 5E 00 01 1D 00 1E 4F E6 16 49 08 00 45 00
@@ -747,7 +746,7 @@ complete_comms:
         dst_ip: 131.94.57.61
         protocol: ICMP
         id: 55012
-        frag_offset: 1
+        frag_offset: 1480
         flags_mf: true
         hexa_frame: |
           00 00 5E 00 01 1D 00 1E 4F E6 16 49 08 00 45 00
@@ -857,8 +856,9 @@ complete_comms:
         dst_ip: 131.94.57.61
         protocol: ICMP
         id: 55012
-        frag_offset: 0
+        frag_offset: 2960
         flags_mf: false
+        icmp_type: ECHO REQUEST
         hexa_frame: |
           00 00 5E 00 01 1D 00 1E 4F E6 16 49 08 00 45 00
           04 70 D6 E4 01 72 40 01 D9 30 83 5E 85 0C 83 5E
@@ -943,9 +943,8 @@ complete_comms:
         src_ip: 131.94.57.61
         dst_ip: 131.94.133.12
         protocol: ICMP
-        icmp_type: ECHO REPLY
         id: 2456
-        frag_offset: 1
+        frag_offset: 0
         flags_mf: true
         hexa_frame: |
           00 1E 4F E6 16 49 00 00 5E 00 01 1D 08 00 45 00
@@ -1055,7 +1054,7 @@ complete_comms:
         dst_ip: 131.94.133.12
         protocol: ICMP
         id: 2456
-        frag_offset: 1
+        frag_offset: 1480
         flags_mf: true
         hexa_frame: |
           00 1E 4F E6 16 49 00 00 5E 00 01 1D 08 00 45 00
@@ -1165,8 +1164,9 @@ complete_comms:
         dst_ip: 131.94.133.12
         protocol: ICMP
         id: 2456
-        frag_offset: 0
+        frag_offset: 2960
         flags_mf: false
+        icmp_type: ECHO REPLY
         hexa_frame: |
           00 1E 4F E6 16 49 00 00 5E 00 01 1D 08 00 45 00
           04 70 09 98 01 72 FA 01 EC 7C 83 5E 39 3D 83 5E
@@ -1243,7 +1243,7 @@ complete_comms:
   - number_comm: 3
     src_comm: 131.94.133.12
     dst_comm: 131.94.57.61
-    packet:
+    packets:
       - frame_number: 13
         len_frame_pcap: 1514
         len_frame_medium: 1518
@@ -1254,9 +1254,8 @@ complete_comms:
         src_ip: 131.94.133.12
         dst_ip: 131.94.57.61
         protocol: ICMP
-        icmp_type: ECHO REQUEST
         id: 55013
-        frag_offset: 1
+        frag_offset: 0
         flags_mf: true
         hexa_frame: |
           00 00 5E 00 01 1D 00 1E 4F E6 16 49 08 00 45 00
@@ -1366,7 +1365,7 @@ complete_comms:
         dst_ip: 131.94.57.61
         protocol: ICMP
         id: 55013
-        frag_offset: 1
+        frag_offset: 1480
         flags_mf: true
         hexa_frame: |
           00 00 5E 00 01 1D 00 1E 4F E6 16 49 08 00 45 00
@@ -1476,8 +1475,9 @@ complete_comms:
         dst_ip: 131.94.57.61
         protocol: ICMP
         id: 55013
-        frag_offset: 0
+        frag_offset: 2960
         flags_mf: false
+        icmp_type: ECHO REQUEST
         hexa_frame: |
           00 00 5E 00 01 1D 00 1E 4F E6 16 49 08 00 45 00
           04 70 D6 E5 01 72 40 01 D9 2F 83 5E 85 0C 83 5E
@@ -1562,9 +1562,8 @@ complete_comms:
         src_ip: 131.94.57.61
         dst_ip: 131.94.133.12
         protocol: ICMP
-        icmp_type: ECHO REPLY
         id: 2726
-        frag_offset: 1
+        frag_offset: 0
         flags_mf: true
         hexa_frame: |
           00 1E 4F E6 16 49 00 00 5E 00 01 1D 08 00 45 00
@@ -1674,7 +1673,7 @@ complete_comms:
         dst_ip: 131.94.133.12
         protocol: ICMP
         id: 2726
-        frag_offset: 1
+        frag_offset: 1480
         flags_mf: true
         hexa_frame: |
           00 1E 4F E6 16 49 00 00 5E 00 01 1D 08 00 45 00
@@ -1784,8 +1783,9 @@ complete_comms:
         dst_ip: 131.94.133.12
         protocol: ICMP
         id: 2726
-        frag_offset: 0
+        frag_offset: 2960
         flags_mf: false
+        icmp_type: ECHO REPLY
         hexa_frame: |
           00 1E 4F E6 16 49 00 00 5E 00 01 1D 08 00 45 00
           04 70 0A A6 01 72 FA 01 EB 6E 83 5E 39 3D 83 5E
@@ -1862,7 +1862,7 @@ complete_comms:
   - number_comm: 4
     src_comm: 131.94.133.12
     dst_comm: 131.94.57.61
-    packet:
+    packets:
       - frame_number: 19
         len_frame_pcap: 1514
         len_frame_medium: 1518
@@ -1873,9 +1873,8 @@ complete_comms:
         src_ip: 131.94.133.12
         dst_ip: 131.94.57.61
         protocol: ICMP
-        icmp_type: ECHO REQUEST
         id: 55014
-        frag_offset: 1
+        frag_offset: 0
         flags_mf: true
         hexa_frame: |
           00 00 5E 00 01 1D 00 1E 4F E6 16 49 08 00 45 00
@@ -1985,7 +1984,7 @@ complete_comms:
         dst_ip: 131.94.57.61
         protocol: ICMP
         id: 55014
-        frag_offset: 1
+        frag_offset: 1480
         flags_mf: true
         hexa_frame: |
           00 00 5E 00 01 1D 00 1E 4F E6 16 49 08 00 45 00
@@ -2095,8 +2094,9 @@ complete_comms:
         dst_ip: 131.94.57.61
         protocol: ICMP
         id: 55014
-        frag_offset: 0
+        frag_offset: 2960
         flags_mf: false
+        icmp_type: ECHO REQUEST
         hexa_frame: |
           00 00 5E 00 01 1D 00 1E 4F E6 16 49 08 00 45 00
           04 70 D6 E6 01 72 40 01 D9 2E 83 5E 85 0C 83 5E
@@ -2181,9 +2181,8 @@ complete_comms:
         src_ip: 131.94.57.61
         dst_ip: 131.94.133.12
         protocol: ICMP
-        icmp_type: ECHO REPLY
         id: 2903
-        frag_offset: 1
+        frag_offset: 0
         flags_mf: true
         hexa_frame: |
           00 1E 4F E6 16 49 00 00 5E 00 01 1D 08 00 45 00
@@ -2293,7 +2292,7 @@ complete_comms:
         dst_ip: 131.94.133.12
         protocol: ICMP
         id: 2903
-        frag_offset: 1
+        frag_offset: 1480
         flags_mf: true
         hexa_frame: |
           00 1E 4F E6 16 49 00 00 5E 00 01 1D 08 00 45 00
@@ -2403,8 +2402,9 @@ complete_comms:
         dst_ip: 131.94.133.12
         protocol: ICMP
         id: 2903
-        frag_offset: 0
+        frag_offset: 2960
         flags_mf: false
+        icmp_type: ECHO REPLY
         hexa_frame: |
           00 1E 4F E6 16 49 00 00 5E 00 01 1D 08 00 45 00
           04 70 0B 57 01 72 FA 01 EA BD 83 5E 39 3D 83 5E

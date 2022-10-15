@@ -30,15 +30,6 @@ class AnalyzeIcmp:
 
         self._start()
 
-    def process_icmp_type(self, node: data_node.Node) -> None:
-        """
-        method that finds icmp type
-        """
-        hexadecimal_icmp = node.raw_hexa_frame[consts.ICMP_TYPE_START:consts.ICMP_TYPE_END]
-        decimal_icmp = util.convert_to_decimal(hexadecimal_icmp)
-        icmp_type = self.txt_loader.icmp_types.get(str(decimal_icmp))
-        node.other_attributes["icmp_type"] = icmp_type
-
     def _start(self) -> None:
         """
         this method filters packets for ICMP packets
@@ -65,23 +56,17 @@ class AnalyzeIcmp:
         self.merged_fragmented_nodes = list(self.nodes_by_id.values())
 
 
-    def find_reply(self, seq_num: str) -> bool or data_node.Node:
-        for node in self.analyzed_nodes:
-            if node.other_attributes.get("icmp_type") == "ECHO REPLY":
-                if node.raw_hexa_frame[80:84] == seq_num:
-                    return node
-        return False
 
     def find_comms(self) -> None:
         pair_dict = {}
         for merged_packet in self.merged_fragmented_nodes:
 
-            if merged_packet[0].other_attributes.get("icmp_type") != "ECHO REQUEST" and merged_packet[0] \
+            if merged_packet[-1].other_attributes.get("icmp_type") != "ECHO REQUEST" and merged_packet[-1] \
                     .other_attributes.get("icmp_type") != "ECHO REPLY":
                 self.partial_comms.append(merged_packet)
                 continue
-            packet_id = merged_packet[0].raw_hexa_frame[consts.ICMP_PACKET_ID_START:consts.ICMP_PACKET_ID_END]
-            if merged_packet[0].other_attributes.get("icmp_type") == "ECHO REPLY":
+            packet_id = merged_packet[-1].raw_hexa_frame[consts.ICMP_PACKET_ID_START:consts.ICMP_PACKET_ID_END]
+            if merged_packet[-1].other_attributes.get("icmp_type") == "ECHO REPLY":
                 request = pair_dict.get(packet_id)
                 if request:
                     self.complete_comms.append([request,merged_packet])
@@ -110,7 +95,7 @@ class AnalyzeIcmp:
             for i in range(len(comm_CS)):
                 comm_CS.yaml_set_comment_before_after_key(i + 1, before='\n')
             dict_to_append = {"number_comm": self.number_complete_comm, "src_comm": src_comm, "dst_comm": dst_comm,
-                              "packet": comm_CS}
+                              "packets": comm_CS}
             self.number_complete_comm += 1
             complete_comm_list.append(dict_to_append)
 

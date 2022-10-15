@@ -73,7 +73,7 @@ def convert_binary_todecimal(bin: bin) -> int:
     :param bin: number to convert
     :return: decimal output
     """
-    return int(bin)
+    return int(bin, 2)
 
 
 def find_frame_type(node: data_node.Node) -> None:

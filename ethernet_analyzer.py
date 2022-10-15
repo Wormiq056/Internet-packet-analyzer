@@ -49,16 +49,18 @@ class EthernetAnalyzer:
         icmp_id = util.convert_to_decimal(
             node.raw_hexa_frame[consts.ICMP_ID_START:consts.ICMP_ID_END])
         if icmp_type is not None:
-            node.other_attributes["icmp_type"] = icmp_type
+            self.icmp_type_by_id[icmp_id] = icmp_type
         node.other_attributes["id"] = icmp_id
         flags_binary = util.convert_decimal_to_binary(
             util.convert_to_decimal(node.raw_hexa_frame[consts.ICMP_FLAGS_START:consts.ICMP_FLAGS_END]))
-        node.other_attributes["frag_offset"] = util.convert_binary_todecimal(flags_binary[:3])
+        node.other_attributes["frag_offset"] = util.convert_binary_todecimal(flags_binary[3:]) * 8
         if flags_binary[2] == '1':
             node.other_attributes["flags_mf"] = True
 
         else:
             node.other_attributes["flags_mf"] = False
+            node.other_attributes["icmp_type"] = self.icmp_type_by_id.get(icmp_id)
+
 
     def process_tcp_udp(self, node: data_node.Node) -> None:
         """

@@ -1,5 +1,4 @@
 import argparse
-
 from scapy.all import *
 from binascii import *
 from modules.filters import analyze_udp as udp, analyze_tcp as tcp, analyze_icmp as icmp, analyze_arp as arp, \

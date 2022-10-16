@@ -95,10 +95,11 @@ def find_frame_type(node: packet_frame.Node) -> None:
 
 def compare_ports(src_port: int, dst_port: int, node: packet_frame.Node) -> bool:
     """
-    not yet needed
-    :param node1:
-    :param node2:
-    :return:
+    this function compares ports with given node ports if they belong to the same communication
+    :param src_port: source port to be checked
+    :param dst_port: destination port to be checker
+    :param node: packet frame to be checked
+    :return: boolean based on check results
     """
     src_node = node.other_attributes.get("src_port")
     dst_node = node.other_attributes.get("dst_port")

@@ -13,7 +13,7 @@ class Node:
     src_mac: str
     dst_mac: str
 
-    hexa_frame = str
+    hexa_frame: str
 
     def __init__(self) -> None:
         """

@@ -1,3 +1,5 @@
+from typing import List
+
 from modules import txt_file_loader
 from util import util, consts
 from model import packet_frame
@@ -21,7 +23,7 @@ class AnalyzeIcmp:
     nodes_by_id = defaultdict(list)
     merged_fragmented_nodes = []
 
-    def __init__(self, packets: list, file_name: str) -> None:
+    def __init__(self, packets: List[str], file_name: str) -> None:
         self.packets = packets
         self.file_name = file_name
         self.txt_loader = txt_file_loader.TxtFileLoader()

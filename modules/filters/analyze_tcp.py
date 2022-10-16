@@ -1,3 +1,5 @@
+from typing import List
+
 from modules import txt_file_loader
 from util import util, consts
 from model import packet_frame
@@ -19,7 +21,7 @@ class AnalyzeTcp:
     partial_comms = []
     ip_buckets = defaultdict(list)
 
-    def __init__(self, packets: list, file_name: str, protocol: str) -> None:
+    def __init__(self, packets: List[str], file_name: str, protocol: str) -> None:
         self.packets = packets
         self.file_name = file_name
         self.txt_loader = txt_file_loader.TxtFileLoader()
@@ -67,7 +69,7 @@ class AnalyzeTcp:
             self._process_bucket(ip_port_bucket)
         self.partial_comms = list(filter(lambda comm: comm != [], self.partial_comms))
 
-    def _return_flags(self, bits: bin) -> list:
+    def _return_flags(self, bits: bin) -> List[str]:
         """
         helper method which returns flags for tcp packet
         :param bits: flag in binary
@@ -239,9 +241,9 @@ class AnalyzeTcp:
                        'complete_comms': complete_comm_list}
 
         partial_list_dict = []
-
-        for node in self.partial_comms[0]:
-            partial_list_dict.append(node.return_dict())
+        if len(self.partial_comms) != 0:
+            for node in self.partial_comms[0]:
+                partial_list_dict.append(node.return_dict())
 
         partial_list_cs = CS(partial_list_dict)
         for i in range(len(partial_list_cs)):

@@ -1,3 +1,5 @@
+from typing import List
+
 from modules import txt_file_loader
 from util import util, consts
 from model import packet_frame
@@ -16,7 +18,7 @@ class AnalyzeUdp:
     number_complete_comm = 1
     complete_comms = []
 
-    def __init__(self, packets: list, file_name: str) -> None:
+    def __init__(self, packets: List[str], file_name: str) -> None:
         self.packets = packets
         self.file_name = file_name
         self.txt_loader = txt_file_loader.TxtFileLoader()

@@ -1,3 +1,5 @@
+from typing import List
+
 from modules import txt_file_loader
 from util import util, consts
 from model import packet_frame
@@ -18,7 +20,7 @@ class AnalyzeArp:
     partial_comms = []
     ip_bucket = defaultdict(list)
 
-    def __init__(self, packets: list, file_name: str) -> None:
+    def __init__(self, packets: List[str], file_name: str) -> None:
         self.packets = packets
         self.file_name = file_name
         self.txt_loader = txt_file_loader.TxtFileLoader()
@@ -81,7 +83,7 @@ class AnalyzeArp:
         for ip_bucket in self.ip_bucket.values():
             self._process_bucket(ip_bucket)
 
-    def _process_bucket(self, bucket: list) -> None:
+    def _process_bucket(self, bucket: List[packet_frame.Node]) -> None:
         """
         method that finds complete and partial communications by looping through filtered packets
         states indicate what next packet I am looking for

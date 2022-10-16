@@ -1,13 +1,15 @@
 import argparse
+
 from scapy.all import *
 from binascii import *
 from modules.filters import analyze_udp as udp, analyze_tcp as tcp, analyze_icmp as icmp, analyze_arp as arp, \
     analyze_all as all
+from util import consts
 
 PCAP_FILE_NAME = "frag.pcap"
 PCAP_FILE_PATH = ".\packets\\" + PCAP_FILE_NAME
 
-CORRECT_PROTOCOLS = ["TFTP", "ICMP", "ARP", "HTTP", "HTTPS", "TELNET", "SSH", "FTP-DATA", "FTP-CONTROL"]
+
 
 
 def main():
@@ -22,7 +24,7 @@ def main():
     args = parser.parse_args()
 
     if args.p is not None:
-        if args.p.upper() in CORRECT_PROTOCOLS:
+        if args.p.upper() in consts.CORRECT_PROTOCOLS:
             if args.p.upper() == "ICMP":
                 analyze_icmp()
             elif args.p.upper() == "ARP":

@@ -1,3 +1,5 @@
+from typing import List
+
 import ruamel.yaml
 from util import util, consts
 from model import packet_frame
@@ -13,7 +15,7 @@ class AnalyzeAll:
     finished_nodes = []
     unique_ipv4_ips = {}
 
-    def __init__(self, packets: list, file_name: str):
+    def __init__(self, packets: List[str], file_name: str):
         self.packets = packets
         self.file_name = file_name
         self.file_loader = txt_file_loader.TxtFileLoader()

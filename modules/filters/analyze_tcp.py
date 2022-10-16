@@ -93,6 +93,9 @@ class AnalyzeTcp:
         state 3 = found syn finding ack
         state 4 = found syn syn ack finding ack
         state 6 = connect established
+        state 7 = found fin,ack finding ack
+        state 8 = found ack after fin,ack finding fin,ack
+        state 9 = found fin,ack, finding ack
         """
         current_state = 0
         comm = []
@@ -158,16 +161,16 @@ class AnalyzeTcp:
                     self.partial_comms.append(comm)
                     comm = []
             elif current_state == 6:
-                if flags == ["FIN"]:
-                    current_state = 0
+                # if flags == ["FIN"]:
+                #     current_state = 0
+                #     comm.append(packet)
+                #     self.complete_comms.append(comm)
+                #     comm = []
+                if flags == ["ACK", "FIN"]:
+                    current_state = 7
                     comm.append(packet)
-                    self.complete_comms.append(comm)
-                    comm = []
-                elif flags == ["ACK", "FIN"]:
-                    current_state = 0
-                    comm.append(packet)
-                    self.complete_comms.append(comm)
-                    comm = []
+                    # self.complete_comms.append(comm)
+                    # comm = []
                 elif flags == ["SYN"]:
                     current_state = 1
                     self.partial_comms.append(comm)
@@ -175,6 +178,46 @@ class AnalyzeTcp:
                 else:
                     current_state = 6
                     comm.append(packet)
+            elif current_state == 7:
+                if flags == ["ACK"]:
+                    current_state = 8
+                    comm.append(packet)
+                elif flags == ["SYN"]:
+                    self.complete_comms.append(comm)
+                    comm = [packet]
+                    current_state = 1
+                else:
+                    self.complete_comms.append(comm)
+                    comm = [packet]
+                    current_state = 0
+            elif current_state == 8:
+                if flags == ["ACK", "FIN"]:
+                    comm.append(packet)
+                    current_state = 9
+                elif flags == ["SYN"]:
+                    current_state = 1
+                    self.complete_comms.append(comm)
+                    comm = [packet]
+                else:
+                    self.complete_comms.append(comm)
+                    comm = [packet]
+                    current_state = 0
+            elif current_state == 9:
+                if flags == ["ACK"]:
+                    current_state = 0
+                    comm.append(packet)
+                    self.complete_comms.append(comm)
+                    comm = []
+                elif flags == ["SYN"]:
+                    self.complete_comms.append(comm)
+                    comm = [packet]
+                    current_state = 1
+                else:
+                    self.complete_comms.append(comm)
+                    comm = [packet]
+                    current_state = 0
+
+
         if current_state == 0 or current_state == 6:
             self.partial_comms.append(comm)
 

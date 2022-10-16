@@ -11,7 +11,6 @@ PCAP_FILE_PATH = ".\packets\\" + PCAP_FILE_NAME
 CORRECT_PROTOCOLS = ["TFTP", "ICMP", "ARP", "HTTP", "HTTPS", "TELNET", "SSH", "FTP-DATA", "FTP-CONTROL"]
 
 
-
 def main():
     parser = argparse.ArgumentParser()
 

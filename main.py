@@ -5,7 +5,7 @@ from binascii import *
 from modules.filters import analyze_udp as udp, analyze_tcp as tcp, analyze_icmp as icmp, analyze_arp as arp, \
     analyze_all as all
 
-PCAP_FILE_NAME = "trace-10.pcap"
+PCAP_FILE_NAME = "frag.pcap"
 PCAP_FILE_PATH = ".\packets\\" + PCAP_FILE_NAME
 
 CORRECT_PROTOCOLS = ["TFTP", "ICMP", "ARP", "HTTP", "HTTPS", "TELNET", "SSH", "FTP-DATA", "FTP-CONTROL"]

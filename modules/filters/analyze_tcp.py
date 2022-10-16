@@ -65,6 +65,7 @@ class AnalyzeTcp:
         """
         for ip_port_bucket in self.ip_buckets.values():
             self._process_bucket(ip_port_bucket)
+        self.partial_comms = list(filter(lambda comm: comm != [], self.partial_comms))
 
     def _return_flags(self, bits: bin) -> list:
         """
@@ -161,16 +162,9 @@ class AnalyzeTcp:
                     self.partial_comms.append(comm)
                     comm = []
             elif current_state == 6:
-                # if flags == ["FIN"]:
-                #     current_state = 0
-                #     comm.append(packet)
-                #     self.complete_comms.append(comm)
-                #     comm = []
                 if flags == ["ACK", "FIN"]:
                     current_state = 7
                     comm.append(packet)
-                    # self.complete_comms.append(comm)
-                    # comm = []
                 elif flags == ["SYN"]:
                     current_state = 1
                     self.partial_comms.append(comm)
@@ -216,7 +210,6 @@ class AnalyzeTcp:
                     self.complete_comms.append(comm)
                     comm = [packet]
                     current_state = 0
-
 
         if current_state == 0 or current_state == 6:
             self.partial_comms.append(comm)

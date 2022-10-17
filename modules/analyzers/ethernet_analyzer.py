@@ -26,6 +26,7 @@ class EthernetAnalyzer:
         if ether_type == "ARP":
             self.process_arp(node)
 
+
     def process_arp(self, node: packet_frame.Node) -> None:
         """
         this method find arp opcode if ethernet type is ARP

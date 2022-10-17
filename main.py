@@ -34,13 +34,16 @@ def main():
     args = parser.parse_args()
 
     if args.f is not None:
+        global PCAP_FILE_NAME
         PCAP_FILE_NAME = args.f
-        path = ".\packets\\" + PCAP_FILE_NAME
+        global PCAP_FILE_PATH
+        PCAP_FILE_PATH = ".\packets\\" + PCAP_FILE_NAME
+
         if PCAP_FILE_NAME[-5:] != ".pcap":
             print("Incorrect file type")
             print("File need to be a .pcap type")
             return
-        if not os.path.exists(path):
+        if not os.path.exists(PCAP_FILE_PATH):
             print("{} is not in .\\packets".format(PCAP_FILE_NAME))
             print("Please add file to directory")
             return

@@ -91,7 +91,7 @@ class AnalyzeTcp:
         states:
 
         state 0 = finding syn
-        state 1 =  finding syn ack or syn
+        state 1 = finding syn ack or syn
         state 2 = found syn ack finding ack
         state 3 = found syn finding ack
         state 4 = found syn syn ack finding ack

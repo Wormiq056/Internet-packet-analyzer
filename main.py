@@ -65,6 +65,10 @@ def main():
 
 
 def analyze_arp() -> None:
+    """
+    function that is called when parameter for protocol was ARP
+    starts the analyzation of packet communication with arp protocol
+    """
     raw_packets = rdpcap(PCAP_FILE_PATH)
     packets = []
     for packet in raw_packets:
@@ -74,6 +78,10 @@ def analyze_arp() -> None:
 
 
 def analyze_icmp() -> None:
+    """
+    function that is called when paramater -p was icmp and it starts
+    the analyzation of communication between packets with icmp protocol
+    """
     raw_packets = rdpcap(PCAP_FILE_PATH)
     packets = []
     for packet in raw_packets:
@@ -83,6 +91,10 @@ def analyze_icmp() -> None:
 
 
 def analyze_udp() -> None:
+    """
+    function which is called when parameter -p was tftp
+    it starts the analyzation of tftp packets and their communications
+    """
     raw_packets = rdpcap(PCAP_FILE_PATH)
     packets = []
     for packet in raw_packets:
@@ -92,6 +104,10 @@ def analyze_udp() -> None:
 
 
 def analyze_all() -> None:
+    """
+    function which is called when paramter -p was not given
+    it starts the analyzation of all packets
+    """
     raw_packets = rdpcap(PCAP_FILE_PATH)
     packets = []
     for packet in raw_packets:
@@ -101,6 +117,10 @@ def analyze_all() -> None:
 
 
 def analyze_tcp(protocol: str) -> None:
+    """
+    function which is called when parameter -p had an tcp protocol
+    it starts the analyzation of given tcp protocol and its communications
+    """
     raw_packets = rdpcap(PCAP_FILE_PATH)
     packets = []
     for packet in raw_packets:

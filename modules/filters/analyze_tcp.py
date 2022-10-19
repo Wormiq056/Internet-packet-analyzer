@@ -82,6 +82,8 @@ class AnalyzeTcp:
             return_list.append("SYN")
         if bits[5] == '1':
             return_list.append("FIN")
+        if bits[3] == '1':
+            return_list.append("RST")
         return return_list
 
     def _process_bucket(self, bucket):
@@ -105,6 +107,11 @@ class AnalyzeTcp:
         for packet in bucket:
             flags = self._return_flags(util.convert_decimal_to_binary(
                 util.convert_to_decimal(packet.raw_hexa_frame[consts.TCP_FLAGS_START:consts.TCP_FLAGS_END]))[10:])
+            if "RST" in flags:
+                comm.append(packet)
+                current_state = 0
+                self.partial_comms.append(comm)
+                comm = []
             if current_state == 0:
                 if flags != ["SYN"]:
                     comm.append(packet)

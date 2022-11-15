@@ -1,5 +1,5 @@
 """
-this file stores all needed constants
+this file stores all constants
 """
 ETHER_TYPE_START = 24
 ETHER_TYPE_END = 28
